@@ -4,12 +4,13 @@ import Modal from 'react-native-modal';
 import { Input, Icon } from '@rneui/themed';
 import useModal from '../application/UseModal';
 
-const SelectModal = ({ title_select, options, onOptionSelect, labelSelect }) => {
+const SelectModal = ({ title_select, options, onOptionSelect, labelSelect, value_id }) => {
   const modalSelect = useModal(false);
 
   const handleOptionSelect = (option) => {
     onOptionSelect(option);
     modalSelect.handleCloseModal();
+    value_id(option.id);
   };
 
   return (

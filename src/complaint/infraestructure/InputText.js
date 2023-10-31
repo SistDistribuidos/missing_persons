@@ -3,7 +3,7 @@ import React from 'react'
 
 import { Input, Icon } from '@rneui/themed';
 
-const InputText = ({title, placeHolder, errorMessage}) => {
+const InputText = ({title, placeHolder, errorMessage, inputChangeValue}) => {
     
   return (
     <View style={{marginHorizontal: 20}}>
@@ -14,10 +14,12 @@ const InputText = ({title, placeHolder, errorMessage}) => {
             placeholder={placeHolder}
             errorStyle={errorMessage ? { color: 'red' } : null}
             errorMessage={errorMessage}
+            onChangeText={inputChangeValue}
             />
         ):(
             <Input
                 placeholder={placeHolder}
+                onChangeText={inputChangeValue}
                 />
         )}
 

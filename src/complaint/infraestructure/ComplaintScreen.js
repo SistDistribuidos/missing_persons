@@ -8,7 +8,7 @@ import InputText from './InputText'
 import SelectModal from './ModalSelect'
 import UseSelected from '../application/UseSelected'
 
-const ComplaintScreen = () => {
+const ComplaintScreen = ({register_Data}) => {
 
     const value_modal = new DataModal();
     value_modal.setTitle("NUEVA PUBLICACION !!!");
@@ -20,9 +20,9 @@ const ComplaintScreen = () => {
     const nativeLanguage = UseSelected();    
 
     return (
-    <ScrollView  style={{flex: 1}}>
+    // <ScrollView  style={{flex: 1}}>
         
-        <ComponentHeader name_app={'APP NAME'} />
+    //     <ComponentHeader name_app={'APP NAME'} />
 
         <View style={{flex: 10, backgroundColor: 'white', marginTop:20}}>
             <ModalSwal
@@ -33,8 +33,9 @@ const ComplaintScreen = () => {
             description={value_modal.getDescription()}
             />
 
-            <InputText title={'Nombre'} placeHolder={'Joel Matias'} errorMessage=''/>
-            <InputText title={'Apellido'} placeHolder={'Fernandez de las casas'} errorMessage=''/>
+            <InputText title={'Nombre'} placeHolder={'Joel Matias'} errorMessage='' inputChangeValue={(value)=>register_Data.setNombre(value)} />
+            <InputText title={'Apellido'} placeHolder={'Fernandez de las casas'} errorMessage='' inputChangeValue={(value)=>register_Data.setApellido(value)}/>
+
             <View style={{flexDirection: 'row'}}>
                     <SelectModal
                         title_select='Sexo'
@@ -45,6 +46,7 @@ const ComplaintScreen = () => {
                         { id: 3, label: 'Argentino' },
                         ]}
                         onOptionSelect={selectNacionality.handleOptionSelect}
+                        value_id={(value_id)=> register_Data.setGenero(value_id)}
                     />
                     <SelectModal
                         title_select='Fecha Nacimiento'
@@ -56,6 +58,7 @@ const ComplaintScreen = () => {
                         { id: 4, label: 'Frances' },
                         ]}
                         onOptionSelect={nativeLanguage.handleOptionSelect}
+                        value_id={(value_id)=> register_Data.setFechas_nacimiento(value_id)}
                     />
             </View>
             <View style={{flexDirection: 'row'}}>
@@ -68,6 +71,7 @@ const ComplaintScreen = () => {
                         { id: 3, label: 'Argentino' },
                         ]}
                         onOptionSelect={selectNacionality.handleOptionSelect}
+                        value_id={(value_id)=> register_Data.setNacionalidad_id(value_id)}
                     />
                     <SelectModal
                         title_select='Idioma Nativo'
@@ -79,6 +83,7 @@ const ComplaintScreen = () => {
                         { id: 4, label: 'Frances' },
                         ]}
                         onOptionSelect={nativeLanguage.handleOptionSelect}
+                        value_id={(value_id)=> register_Data.setIdioma_id(value_id)}
                     />
             </View>
             <View style={{flexDirection: 'row'}}>
@@ -91,6 +96,7 @@ const ComplaintScreen = () => {
                         { id: 3, label: 'Argentino' },
                         ]}
                         onOptionSelect={selectNacionality.handleOptionSelect}
+                        value_id={(value_id)=> register_Data.setAltura(value_id)}
                     />
                     <SelectModal
                         title_select='Peso'
@@ -102,6 +108,7 @@ const ComplaintScreen = () => {
                         { id: 4, label: 'Frances' },
                         ]}
                         onOptionSelect={nativeLanguage.handleOptionSelect}
+                        value_id={(value_id)=> register_Data.setPeso(value_id)}
                     />
 
             </View>
@@ -115,6 +122,7 @@ const ComplaintScreen = () => {
                         { id: 3, label: 'Argentino' },
                         ]}
                         onOptionSelect={selectNacionality.handleOptionSelect}
+                        value_id={(value_id)=> register_Data.setColor_cabello(value_id)}
                     />
                     <SelectModal
                         title_select='Color ojos'
@@ -126,17 +134,18 @@ const ComplaintScreen = () => {
                         { id: 4, label: 'Frances' },
                         ]}
                         onOptionSelect={nativeLanguage.handleOptionSelect}
+                        value_id={(value_id)=> register_Data.setColor_ojos(value_id)}
                     />
             </View>
             
-            <InputText title={'Cicatrices'} placeHolder={'cicatriz en la frente con forma de rayo'} errorMessage=''/>
+            <InputText title={'Cicatrices'} placeHolder={'cicatriz en la frente con forma de rayo'} errorMessage='' inputChangeValue={(value)=>register_Data.setCicatriz(value)} />
             
-            <InputText title={'Tatuajes'} placeHolder={'Tatuaje en la espalda forma de cobra'} errorMessage=''/>
+            <InputText title={'Tatuajes'} placeHolder={'Tatuaje en la espalda forma de cobra'} errorMessage='' inputChangeValue={(value)=>register_Data.setTatuaje(value)} />
 
         </View>
 
 
-    </ScrollView >
+    // </ScrollView >
   )
 }
 
