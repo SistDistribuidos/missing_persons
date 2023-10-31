@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView  } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity  } from 'react-native'
 import React, { useState } from 'react'
 import ComponentHeader from './ComponentHeader'
 import ModalSwal from './ModalSwal'
@@ -6,7 +6,7 @@ import DataModal from '../domain/DataModal'
 import useModal from '../application/UseModal'
 import InputText from './InputText'
 import SelectModal from './ModalSelect'
-import useSelected from '../application/useSelected'
+import UseSelected from '../application/UseSelected'
 
 const ComplaintScreen = () => {
 
@@ -14,15 +14,13 @@ const ComplaintScreen = () => {
     value_modal.setTitle("NUEVA PUBLICACION !!!");
     value_modal.setDescription("Lamentamos mucho la situacion en la que te encuentras, esperamos que esto ayude a encontrar a esa persona para que puedas reunirte con ella en un futuro. ");
     
-    const modalSwal = useModal();
+    const modalSwal = useModal(true);
 
-    const modalSelect = useModal();
-    // modalSelect.handleCloseModal();
-    const selectedOption = useSelected();
-    
+    const selectNacionality = UseSelected();    
+    const nativeLanguage = UseSelected();    
 
     return (
-    <SafeAreaView  style={{flex: 1}}>
+    <ScrollView  style={{flex: 1}}>
         
         <ComponentHeader name_app={'APP NAME'} />
 
@@ -37,33 +35,108 @@ const ComplaintScreen = () => {
 
             <InputText title={'Nombre'} placeHolder={'Joel Matias'} errorMessage=''/>
             <InputText title={'Apellido'} placeHolder={'Fernandez de las casas'} errorMessage=''/>
-
-            <View style={{backgroundColor: 'blue', flex: 1, flexDirection: 'row', justifyContent: 'center', alignContent: 'center'}}>
-                <View style={{backgroundColor: 'yellow', flex: 1}}>
-
-                {/* <SelectModal
-                    isVisible={modalSelect.visible}
-                    options={[
-                    { id: 1, label: 'Opción 1' },
-                    { id: 2, label: 'Opción 2' },
-                    { id: 3, label: 'Opción 3' },
-                    ]}
-                    onOptionSelect={selectedOption.handleOptionSelect}
-                    onClose={modalSelect.handleCloseModal}
-                /> */}
-
-                </View>
-                <View style={{backgroundColor: 'green', flex: 1}}>
-                <InputText title={'Nombre'} placeHolder={'Joel Matias'} errorMessage=''/>
-
-                </View>
+            <View style={{flexDirection: 'row'}}>
+                    <SelectModal
+                        title_select='Sexo'
+                        labelSelect={selectNacionality.selectedOption.label}
+                        options={[
+                        { id: 1, label: 'Boliviano' },
+                        { id: 2, label: 'Español' },
+                        { id: 3, label: 'Argentino' },
+                        ]}
+                        onOptionSelect={selectNacionality.handleOptionSelect}
+                    />
+                    <SelectModal
+                        title_select='Fecha Nacimiento'
+                        labelSelect={nativeLanguage.selectedOption.label}
+                        options={[
+                        { id: 1, label: 'Quechua' },
+                        { id: 2, label: 'Español' },
+                        { id: 3, label: 'Aymara' },
+                        { id: 4, label: 'Frances' },
+                        ]}
+                        onOptionSelect={nativeLanguage.handleOptionSelect}
+                    />
+            </View>
+            <View style={{flexDirection: 'row'}}>
+                    <SelectModal
+                        title_select='Nacionalidad'
+                        labelSelect={selectNacionality.selectedOption.label}
+                        options={[
+                        { id: 1, label: 'Boliviano' },
+                        { id: 2, label: 'Español' },
+                        { id: 3, label: 'Argentino' },
+                        ]}
+                        onOptionSelect={selectNacionality.handleOptionSelect}
+                    />
+                    <SelectModal
+                        title_select='Idioma Nativo'
+                        labelSelect={nativeLanguage.selectedOption.label}
+                        options={[
+                        { id: 1, label: 'Quechua' },
+                        { id: 2, label: 'Español' },
+                        { id: 3, label: 'Aymara' },
+                        { id: 4, label: 'Frances' },
+                        ]}
+                        onOptionSelect={nativeLanguage.handleOptionSelect}
+                    />
+            </View>
+            <View style={{flexDirection: 'row'}}>
+                    <SelectModal
+                        title_select='Altura'
+                        labelSelect={selectNacionality.selectedOption.label}
+                        options={[
+                        { id: 1, label: 'Boliviano' },
+                        { id: 2, label: 'Español' },
+                        { id: 3, label: 'Argentino' },
+                        ]}
+                        onOptionSelect={selectNacionality.handleOptionSelect}
+                    />
+                    <SelectModal
+                        title_select='Peso'
+                        labelSelect={nativeLanguage.selectedOption.label}
+                        options={[
+                        { id: 1, label: 'Quechua' },
+                        { id: 2, label: 'Español' },
+                        { id: 3, label: 'Aymara' },
+                        { id: 4, label: 'Frances' },
+                        ]}
+                        onOptionSelect={nativeLanguage.handleOptionSelect}
+                    />
 
             </View>
+            <View style={{flexDirection: 'row'}}>
+                    <SelectModal
+                        title_select='Color cabello'
+                        labelSelect={selectNacionality.selectedOption.label}
+                        options={[
+                        { id: 1, label: 'Boliviano' },
+                        { id: 2, label: 'Español' },
+                        { id: 3, label: 'Argentino' },
+                        ]}
+                        onOptionSelect={selectNacionality.handleOptionSelect}
+                    />
+                    <SelectModal
+                        title_select='Color ojos'
+                        labelSelect={nativeLanguage.selectedOption.label}
+                        options={[
+                        { id: 1, label: 'Quechua' },
+                        { id: 2, label: 'Español' },
+                        { id: 3, label: 'Aymara' },
+                        { id: 4, label: 'Frances' },
+                        ]}
+                        onOptionSelect={nativeLanguage.handleOptionSelect}
+                    />
+            </View>
+            
+            <InputText title={'Cicatrices'} placeHolder={'cicatriz en la frente con forma de rayo'} errorMessage=''/>
+            
+            <InputText title={'Tatuajes'} placeHolder={'Tatuaje en la espalda forma de cobra'} errorMessage=''/>
 
         </View>
 
 
-    </SafeAreaView >
+    </ScrollView >
   )
 }
 

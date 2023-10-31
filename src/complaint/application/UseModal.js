@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-const useModal = () => {
-    const [visible, setVisible] = useState(true);
+const useModal = ({value_init}) => {
+    const [visible, setVisible] = useState(value_init);
 
     const handleCloseModal = () => {
         setVisible(false);
