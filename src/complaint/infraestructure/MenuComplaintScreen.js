@@ -1,46 +1,76 @@
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet   } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
-import ComponentHeader from './ComponentHeader'
 import ModalSwal from './ModalSwal'
 import DataModal from '../domain/DataModal'
 import useModal from '../application/UseModal'
-import InputText from './InputText'
-import SelectModal from './ModalSelect'
-import UseSelected from '../application/UseSelected'
-import ComplaintScreen from './ComplaintScreen'
-import ComplaintScreen2 from './ComplaintScreen2'
+import PersonalInformationScreen from './PersonalInformationScreen'
+import DataAtTheTimeOfDisappearance from './DataAtTheTimeOfDisappearance'
 import FilesScreen from './FilesScreen'
 import ComplaintRegisterData from '../domain/ComplaintRegisterData'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import InformationAndFilesButton from './InformationAndFilesButton'
+import * as Animatable from 'react-native-animatable';
+import ButtonComponent from './ButtonComponent'
+import Colors from '../domain/Colors'
 
 const MenuComplaintScreen = () => {
 
-    const [viewMenu, setViewMenu] = useState(1)
+    const [viewScreen, setViewScreen] = useState('information')
+
+    const value_modal = new DataModal();
+    value_modal.setTitle("NUEVA PUBLICACION !!!");
+    value_modal.setDescription("Lamentamos mucho la situacion en la que te encuentras, esperamos que esto ayude a encontrar a esa persona para que puedas reunirte con ella en un futuro. ");
+    const modalSwal = useModal(true);
 
     const data_complaint_register = new ComplaintRegisterData();
-
+    
     return (
-    <ScrollView  style={{flex: 1}}>
-        
-        <ComponentHeader name_app={'REGISTRO DENUNCIA'} />
+        <View style={{ flex: 1 }}>
+            <ModalSwal
+                visible={modalSwal.visible}
+                onClose={modalSwal.handleCloseModal}
+                onAccept={modalSwal.handleCloseModal}
+                title={value_modal.getTitle()}
+                description={value_modal.getDescription()}
+            />
 
-        <View style={{ flexDirection: 'row',padding:15}}>
-            <View style={{flex:1, justifyContent: 'center', alignItems: 'center', alignContent:'center', backgroundColor:'red', borderTopLeftRadius:25, borderBottomLeftRadius:25, padding: 15}}>
-                <TouchableOpacity onPress={()=> {console.log('Informacion'), setViewMenu(1)}}>
-                    <Text style={{color:'white', fontSize: 20, fontWeight:'bold'}}>Informacion</Text>
-                </TouchableOpacity>
-            </View>
-            <View style={{flex:1, justifyContent: 'center', alignItems: 'center', alignContent:'center', backgroundColor:'green', borderTopRightRadius:25, borderBottomRightRadius:25, padding: 15}}>
-                <TouchableOpacity onPress={()=> {console.log('Archivossssssssssssssssss', data_complaint_register), setViewMenu(2)}}>
-                    <Text style={{color:'white', fontSize: 20, fontWeight:'bold'}}>Archivos</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
-        <ComplaintScreen register_Data={data_complaint_register}/>
-        <ComplaintScreen2 register_Data={data_complaint_register}/>
-        <FilesScreen />
+            <SafeAreaView >
+                <InformationAndFilesButton selected_button={(val)=>setViewScreen(val)} />
 
+                <ScrollView 
+                style={{marginBottom: 70}}
+                >
+                    <Animatable.View 
+                        animation={viewScreen==='information'? 'bounceInUp' : 'fadeOutUp'} duration={1500} 
+                        style={{flex:1, display: viewScreen==='information'? 'flex' : 'none'}}
+                        >
+                        <PersonalInformationScreen register_Data={data_complaint_register} 
+                            nextButtonPressed={()=> setViewScreen('DataAtTheTimeOfDisappearance')}
+                            antButtonPressed={()=>console.log('boton cancelar presionado')}/>
 
-    </ScrollView >
-  )
+                    </Animatable.View>
+                    <Animatable.View 
+                        animation={viewScreen==='DataAtTheTimeOfDisappearance'? 'bounceInUp' : 'fadeOutUp'} duration={1500} 
+                        style={{flex:1, display: viewScreen==='DataAtTheTimeOfDisappearance'? 'flex' : 'none'}}
+                        >
+                        <DataAtTheTimeOfDisappearance register_Data={data_complaint_register} />
+
+                    </Animatable.View>
+
+                    <Animatable.View 
+                        animation={viewScreen==='files'? 'bounceInUp' : 'fadeOutUp'} duration={1500} 
+                        style={{flex:1, display: viewScreen==='files'? 'flex' : 'none'}}
+                        >
+                        <FilesScreen />
+
+                    </Animatable.View>
+                    
+                    
+                </ScrollView>
+            
+            </SafeAreaView>
+
+        </View >
+    )
 }
 export default MenuComplaintScreen

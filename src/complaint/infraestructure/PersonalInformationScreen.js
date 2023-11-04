@@ -1,37 +1,21 @@
 import { View, Text, ScrollView, TouchableOpacity  } from 'react-native'
 import React, { useState } from 'react'
 import ComponentHeader from './ComponentHeader'
-import ModalSwal from './ModalSwal'
 import DataModal from '../domain/DataModal'
 import useModal from '../application/UseModal'
 import InputText from './InputText'
 import SelectModal from './ModalSelect'
 import UseSelected from '../application/UseSelected'
+import ButtonComponent from './ButtonComponent'
+import Colors from '../domain/Colors'
 
-const ComplaintScreen = ({register_Data}) => {
-
-    const value_modal = new DataModal();
-    value_modal.setTitle("NUEVA PUBLICACION !!!");
-    value_modal.setDescription("Lamentamos mucho la situacion en la que te encuentras, esperamos que esto ayude a encontrar a esa persona para que puedas reunirte con ella en un futuro. ");
-    
-    const modalSwal = useModal(true);
+const ComplaintScreen = ({register_Data, nextButtonPressed, antButtonPressed}) => {
 
     const selectNacionality = UseSelected();    
     const nativeLanguage = UseSelected();    
 
     return (
-    // <ScrollView  style={{flex: 1}}>
-        
-    //     <ComponentHeader name_app={'APP NAME'} />
-
-        <View style={{flex: 10, backgroundColor: 'white', marginTop:20}}>
-            <ModalSwal
-            visible={modalSwal.visible}
-            onClose={modalSwal.handleCloseModal}
-            onAccept={modalSwal.handleCloseModal}
-            title={value_modal.getTitle()}
-            description={value_modal.getDescription()}
-            />
+        <View style={{ backgroundColor: 'white', marginTop: 3, flex:1}}>
 
             <InputText title={'Nombre'} placeHolder={'Joel Matias'} errorMessage='' inputChangeValue={(value)=>register_Data.setNombre(value)} />
             <InputText title={'Apellido'} placeHolder={'Fernandez de las casas'} errorMessage='' inputChangeValue={(value)=>register_Data.setApellido(value)}/>
@@ -142,10 +126,18 @@ const ComplaintScreen = ({register_Data}) => {
             
             <InputText title={'Tatuajes'} placeHolder={'Tatuaje en la espalda forma de cobra'} errorMessage='' inputChangeValue={(value)=>register_Data.setTatuaje(value)} />
 
+            <View style={{flexDirection:'row'}}>
+                <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
+                    <ButtonComponent nameButton='CANCELAR' colorButton={Colors.GREEN}
+                    buttonPressed={antButtonPressed} />
+                </View>
+                <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
+                    <ButtonComponent nameButton='SIGUIENTE' colorButton={Colors.RED} 
+                    buttonPressed={nextButtonPressed} />
+                </View>
+            </View>
+
         </View>
-
-
-    // </ScrollView >
   )
 }
 

@@ -3,8 +3,10 @@ import React from 'react'
 import InputText from './InputText'
 import SelectModal from './ModalSelect'
 import UseSelected from '../application/UseSelected'
+import ButtonComponent from './ButtonComponent'
+import Colors from '../domain/Colors'
 
-const ComplaintScreen2 = ({register_Data}) => {
+const ComplaintScreen2 = ({register_Data, publishButtonPressed, backButtonPressed}) => {
     
     const selectNacionality = UseSelected();    
     const nativeLanguage = UseSelected();    
@@ -62,6 +64,17 @@ const ComplaintScreen2 = ({register_Data}) => {
                         onOptionSelect={nativeLanguage.handleOptionSelect}
                         value_id={(value_id)=> register_Data.setContacto(value_id)}
                     />
+            </View>
+
+            <View style={{flexDirection:'row'}}>
+                <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
+                    <ButtonComponent nameButton='VOLVER' colorButton={Colors.GREEN}
+                    buttonPressed={backButtonPressed} />
+                </View>
+                <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
+                    <ButtonComponent nameButton='PUBBLICAR' colorButton={Colors.RED} 
+                    buttonPressed={publishButtonPressed} />
+                </View>
             </View>
     </View>
   )

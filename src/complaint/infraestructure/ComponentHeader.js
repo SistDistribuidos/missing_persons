@@ -2,11 +2,13 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { Ionicons } from '@expo/vector-icons';
 import { Icon } from '@rneui/themed';
+import { StatusBar } from 'expo-status-bar';
 
 const ComponentHeader = (props) => {
   return (
     <View style={{flex: 1, backgroundColor: '#CA1414', flexDirection: 'row'}}>
-        
+        {/* <StatusBar style="auto" /> */}
+        <StatusBar style="light" backgroundColor="#FF0000" />
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', alignContent: 'center', marginBottom: -30}}>
 
         </View>
