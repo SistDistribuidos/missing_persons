@@ -9,7 +9,7 @@ import UseSelected from '../application/UseSelected'
 import ButtonComponent from './ButtonComponent'
 import Colors from '../domain/Colors'
 
-const ComplaintScreen = ({register_Data, nextButtonPressed, antButtonPressed}) => {
+const PersonalInformationScreen = ({register_Data, nextButtonPressed, antButtonPressed}) => {
 
     const selectNacionality = UseSelected();    
     const nativeLanguage = UseSelected();    
@@ -141,4 +141,4 @@ const ComplaintScreen = ({register_Data, nextButtonPressed, antButtonPressed}) =
   )
 }
 
-export default ComplaintScreen
+export default PersonalInformationScreen

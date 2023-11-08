@@ -2,6 +2,7 @@ import { View, Text, Button, Image } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { Icon } from '@rneui/themed';
 import * as ImagePicker from 'expo-image-picker';
+import ImageGalleryShow from './ImageGalleryShow';
 
 const FilesScreen = () => {
     
@@ -28,7 +29,6 @@ const FilesScreen = () => {
     if (!result.canceled) {
       setImage(result.assets[0].uri);
     }
-    console.log(image);
   };
 
   return (
@@ -52,9 +52,26 @@ const FilesScreen = () => {
                 />
         </View>
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-            {/* <Button title="Seleccionar Imagen" onPress={pickImage} /> */}
+            {image && 
+                (<View style={{width: 200,
+                  height: 200,
+                  borderRadius: 10, // Agrega un borde redondeado
+                  backgroundColor: 'white',
+                  shadowColor: '#000',
+                  shadowOffset: {
+                    width: 0,
+                    height: 4,
+                  },
+                  shadowOpacity: 0.3, // Cambia la opacidad de la sombra según tus preferencias
+                  shadowRadius: 4,
+                  elevation: 5, // Sombra en dispositivos Android
+                  overflow: 'hidden'}}>
+                    <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+                    </View>
+                )
+            }
         </View>
+        <ImageGalleryShow image={{image}}></ImageGalleryShow>
     </View>
   )
 }

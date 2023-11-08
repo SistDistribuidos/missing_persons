@@ -5,9 +5,13 @@ import SelectModal from './ModalSelect'
 import UseSelected from '../application/UseSelected'
 import ButtonComponent from './ButtonComponent'
 import Colors from '../domain/Colors'
+import { Dimensions } from 'react-native';
 
-const ComplaintScreen2 = ({register_Data, publishButtonPressed, backButtonPressed}) => {
+const DataAtTheTimeOfDisappearance = ({register_Data, publishButtonPressed, backButtonPressed}) => {
     
+    const { width, height } = Dimensions.get('window');
+    console.log(`Ancho de pantalla: ${width}`);
+    console.log(`Altura de pantalla: ${height}`);
     const selectNacionality = UseSelected();    
     const nativeLanguage = UseSelected();    
 
@@ -80,4 +84,4 @@ const ComplaintScreen2 = ({register_Data, publishButtonPressed, backButtonPresse
   )
 }
 
-export default ComplaintScreen2
+export default DataAtTheTimeOfDisappearance
