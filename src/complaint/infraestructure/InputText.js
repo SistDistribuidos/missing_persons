@@ -7,7 +7,7 @@ const InputText = ({title, placeHolder, errorMessage, inputChangeValue}) => {
     
   return (
     <View style={{marginHorizontal: 20}}>
-      <Text>{title}</Text>
+      <Text style={{fontWeight: 'bold'}}>{title}</Text>
 
         {errorMessage?(
             <Input

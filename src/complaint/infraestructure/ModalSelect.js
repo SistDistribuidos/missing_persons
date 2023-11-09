@@ -16,7 +16,7 @@ const SelectModal = ({ title_select, options, onOptionSelect, labelSelect, value
   return (
 
     <View style={{ marginHorizontal: 20, flex: 1 }}>
-      <Text>{title_select}</Text>
+      <Text style={{fontWeight: 'bold'}}>{title_select}</Text>
       <TouchableOpacity onPress={modalSelect.showAgain}>
         <Input
           placeholder={labelSelect}

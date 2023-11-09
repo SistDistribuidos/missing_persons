@@ -1,6 +1,6 @@
 import { View, Text, ScrollView, TouchableOpacity  } from 'react-native'
 import React, { useState } from 'react'
-import ComponentHeader from './ComponentHeader'
+import ComponentHeader from './components/ComponentHeader'
 import DataModal from '../domain/DataModal'
 import useModal from '../application/UseModal'
 import InputText from './InputText'

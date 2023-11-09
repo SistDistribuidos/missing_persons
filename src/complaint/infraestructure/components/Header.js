@@ -3,9 +3,9 @@ import React from 'react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { Header as HeaderRNE, HeaderProps, Icon } from '@rneui/themed';
 
-const Header = () => {
+const Header = ({title}) => {
   return (
-    <View style={{flex:1}}>
+    <View style={{}}>
       <HeaderRNE 
         style={styles.headerContainer}
         leftComponent={{
@@ -25,7 +25,7 @@ const Header = () => {
               </TouchableOpacity>
             </View>
         }
-        centerComponent={{ text: 'Header', style: styles.heading }}
+        centerComponent={{ text: title, style: styles.heading }}
       />
     </View>
   )
