@@ -35,8 +35,14 @@ const ModalSelectColour = ({ title_select, options, onOptionSelect, labelSelect,
         onRequestClose={()=>console.log('tocaaaa')}
       >
           <View style={{width:width-30, height: 350, justifyContent: 'center', alignItems: 'center', backgroundColor: Colors.WHITE, borderRadius: 20 }}>
-              <View style={{ flex: 9, flexDirection:'row'}}> 
-                
+              <View style={{flex:1}}>
+                <View style={{flex:1}}>
+                  <Text style={{fontWeight: 'bold', fontSize: 20}}>Seleccione color del cabello</Text>
+                </View>
+                <View style={{ flex: 9, flexDirection:'row'}}> 
+                  <View style={{ flex: 1, backgroundColor: 'purple'}}></View>
+                  <View style={{ flex: 1}}></View>
+                </View>
               </View>
              
           </View>

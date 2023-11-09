@@ -7,6 +7,7 @@ import ButtonNext from './components/ButtonNext'
 import ModalSelectColour from './components/ModalSelectColour'
 import Colors from '../domain/Colors'
 import useSelected from '../application/UseSelected'
+import DateTimeComponent from './components/DateTimeComponent'
 
 const AddDisappearanceData = ({register_Data, button_next}) => {
 
@@ -20,19 +21,9 @@ const AddDisappearanceData = ({register_Data, button_next}) => {
                 <View style={{ flex: 10 }}>
                     <ScrollView>
                         <InputText title={'Donde se dirigia'} placeHolder={'Joel Matias'} errorMessage='' inputChangeValue={(value)=>register_Data.setDireccion(value)} />
+  
+                        <DateTimeComponent /> 
 
-                        <SelectModal
-                                title_select='Fecha y hora'
-                                labelSelect={data_and_time.selectedOption.label}
-                                options={[
-                                    { id: 1, label: 'Boliviano' },
-                                    { id: 2, label: 'Español' },
-                                    { id: 3, label: 'Argentino' },
-                                ]}
-                                onOptionSelect={data_and_time.handleOptionSelect}
-                                value_id={(value_id) => register_Data.setGenero(value_id)}
-                        />
-                           
                         <InputText title={'Ultima ropa que traia puesta'} placeHolder={'Fernandez de las casas'} errorMessage='' inputChangeValue={(value)=>register_Data.setUltima_ropa_puesta(value)}/>
 
                         <SelectModal

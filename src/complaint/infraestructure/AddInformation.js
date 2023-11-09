@@ -6,6 +6,7 @@ import SelectModal from './ModalSelect'
 import useSelected from '../application/UseSelected'
 import ModalSelectGenero from './components/ModalSelectGenero'
 import ButtonNext from './components/ButtonNext'
+import DateTimeComponent from './components/DateTimeComponent'
 // import { ScrollView } from 'react-native-gesture-handler'
 
 const AddInformation = ({register_Data, button_next}) => {
@@ -26,18 +27,7 @@ const AddInformation = ({register_Data, button_next}) => {
                                 onOptionSelect={select_genero.handleOptionSelect}
                                 value_id={(value_id)=> register_Data.setFechas_nacimiento(value_id)}
                             />
-                    <SelectModal
-                            title_select='Fecha Nacimiento'
-                            labelSelect={select_nacionality.selectedOption.label}
-                            options={[
-                            { id: 1, label: 'Quechua' },
-                            { id: 2, label: 'Español' },
-                            { id: 3, label: 'Aymara' },
-                            { id: 4, label: 'Frances' },
-                            ]}
-                            onOptionSelect={select_nacionality.handleOptionSelect}
-                            value_id={(value_id)=> register_Data.setFechas_nacimiento(value_id)}
-                        />
+                    <DateTimeComponent />
                     <SelectModal
                             title_select='Nacionalidad'
                             labelSelect={select_nacionality.selectedOption.label}
