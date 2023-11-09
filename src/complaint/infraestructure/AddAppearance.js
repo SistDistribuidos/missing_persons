@@ -7,6 +7,9 @@ import ButtonNext from './components/ButtonNext'
 import ModalSelectColour from './components/ModalSelectColour'
 import Colors from '../domain/Colors'
 import useSelected from '../application/UseSelected'
+import InputNumber from './InputNumber'
+import  { getColors } from './../../application/services/ValuesService'
+import { useState, useEffect } from 'react'
 
 const AddAppearance = ({register_Data, button_next}) => {
 
@@ -17,78 +20,46 @@ const AddAppearance = ({register_Data, button_next}) => {
     const height = useSelected();
     const weight = useSelected();
 
+    const [options_colors, set_options_colors] = useState([]);
+
+    useEffect(() => {
+        chargueColors();
+    },[]);
+
+    const chargueColors = async () => {
+        try {
+          const listOfColors = await getColors();
+          set_options_colors([...listOfColors]);
+        } catch(e) {
+          console.log(e)
+        }
+    };
+
     return (
         <View style={{ flex: 1 }}>
             <View style={styles.card}>
                 <View style={{ flex: 10 }}>
                     <ScrollView>
-                        <ModalSelectColour
+                        <SelectModal
                             title_select='Color de cabello'
                             labelSelect={hair_colour.selectedOption.label}
                             onOptionSelect={hair_colour.handleOptionSelect}
-                            value_id={(value_id) => register_Data.setFechas_nacimiento(value_id)}
+                            value_id={(value_id) => register_Data.setColor_cabello(value_id)}
+                            options={ options_colors}
                         />
-                        <View style={{ flexDirection: 'row' }}>
-                            <SelectModal
-                                title_select='Altura'
-                                labelSelect={height.selectedOption.label}
-                                options={[
-                                    { id: 1, label: 'Boliviano' },
-                                    { id: 2, label: 'Español' },
-                                    { id: 3, label: 'Argentino' },
-                                ]}
-                                onOptionSelect={height.handleOptionSelect}
-                                value_id={(value_id) => register_Data.setGenero(value_id)}
-                            />
-                            <SelectModal
-                                title_select='Peso'
-                                labelSelect={weight.selectedOption.label}
-                                options={[
-                                    { id: 1, label: 'Quechua' },
-                                    { id: 2, label: 'Español' },
-                                    { id: 3, label: 'Aymara' },
-                                    { id: 4, label: 'Frances' },
-                                ]}
-                                onOptionSelect={weight.handleOptionSelect}
-                                value_id={(value_id) => register_Data.setFechas_nacimiento(value_id)}
-                            />
+                        <View style={{ flexDirection: 'row', gap: 50 }}>
+                          <InputNumber style={{width: 90}} title={'Altura'} placeHolder={'0.00'} errorMessage='' inputChangeValue={(value)=>register_Data.setAltura(value)} />
+                          <InputNumber style={{width: 90}} title={'Peso'} placeHolder={'0.00'} errorMessage='' inputChangeValue={(value)=>register_Data.setPeso(value)} />
                         </View>
                         <SelectModal
                             title_select='Color de Ojos'
                             labelSelect={eye_color.selectedOption.label}
-                            options={[
-                                { id: 1, label: 'Quechua' },
-                                { id: 2, label: 'Español' },
-                                { id: 3, label: 'Aymara' },
-                                { id: 4, label: 'Frances' },
-                            ]}
+                            options={options_colors}
                             onOptionSelect={eye_color.handleOptionSelect}
-                            value_id={(value_id) => register_Data.setFechas_nacimiento(value_id)}
+                            value_id={(value_id) => register_Data. setColor_ojos(value_id)}
                         />
-                        <SelectModal
-                            title_select='Descripcion de cicatrices'
-                            labelSelect={eye_color.selectedOption.label}
-                            options={[
-                                { id: 1, label: 'Quechua' },
-                                { id: 2, label: 'Español' },
-                                { id: 3, label: 'Aymara' },
-                                { id: 4, label: 'Frances' },
-                            ]}
-                            onOptionSelect={eye_color.handleOptionSelect}
-                            value_id={(value_id) => register_Data.setFechas_nacimiento(value_id)}
-                        />
-                        <SelectModal
-                            title_select='Descripcion de tatuajes'
-                            labelSelect={tattoo_description.selectedOption.label}
-                            options={[
-                                { id: 1, label: 'Quechua' },
-                                { id: 2, label: 'Español' },
-                                { id: 3, label: 'Aymara' },
-                                { id: 4, label: 'Frances' },
-                            ]}
-                            onOptionSelect={tattoo_description.handleOptionSelect}
-                            value_id={(value_id) => register_Data.setFechas_nacimiento(value_id)}
-                        />
+                        <InputText title={'Descripcion de las cicatrices'} placeHolder={'Ej. Cicatriz en la parte der...'} errorMessage='' inputChangeValue={(value)=>register_Data.setCicatriz(value)} />
+                        <InputText title={'Descripcion de tatuajes'} placeHolder={'Ej. tatuaje en forma de ...'} errorMessage='' inputChangeValue={(value)=>register_Data.setTatuaje(value)} />
 
                     </ScrollView>
                 </View>

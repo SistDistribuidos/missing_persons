@@ -1,18 +1,30 @@
 import { View, StyleSheet } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import ButtonNext from './components/ButtonNext'
 import Colors from '../domain/Colors'
 import UploadPhoto from './UploadPhoto'
 import RegisterUbication from './RegisterUbication'
 
-const AddImagesAndFiles = () => {
+const AddImagesAndFiles = ({register_Data}) => {
+
+    const [denunciaImage, setDenunciaImage] = useState(null);
+    const [fotoImage, setFotoImage] = useState(null);
+
+    const setImages = (image, type) => {
+        if (type == 'denuncia')
+            setDenunciaImage(image);
+        else
+            setFotoImage(image);
+
+        console.log(register_Data);
+    };
     return (
 
         <View style={{ flex: 1 }}>
             <View style={styles.card}>
                 <View style={{ flex: 10 }}>
                     <View style={{ flex: 1}}>
-                        <UploadPhoto />
+                        <UploadPhoto setImages={setImages} />
                     </View>
                     <View style={{ flex: 1 }}>
                         <RegisterUbication />

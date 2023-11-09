@@ -11,8 +11,8 @@ class ComplaintRegisterData {
       this.direccion = '';
       this.color_cabello = '';
       this.color_ojos = '';
-      this.fecha_desaparición = '';
-      this.hora_desaparición = '';
+      this.fecha_desaparicion = '';
+      this.hora_desaparicion = '';
       this.ultima_ropa_puesta = '';
       this.ubicación = '';
       this.user_id = '';
@@ -158,7 +158,20 @@ class ComplaintRegisterData {
     getEstado() {
         return this.estado;
     }
-    
+
+    setFecha_desaparicion(fecha_desaparicion) {
+        this.fecha_desaparicion = fecha_desaparicion;
+    }
+    getFecha_desaparicion() {
+        return this.fecha_desaparicion;
+    }
+
+    setHora_desaparicion(hora_desaparicion) {
+        this.hora_desaparicion = hora_desaparicion;
+    }
+    getHora_desaparicion() {
+        return this.hora_desaparicion;
+    }       
   }
   
   export default ComplaintRegisterData;

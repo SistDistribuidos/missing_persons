@@ -8,6 +8,7 @@ import ModalSelectColour from './components/ModalSelectColour'
 import Colors from '../domain/Colors'
 import useSelected from '../application/UseSelected'
 import DateTimeComponent from './components/DateTimeComponent'
+import InputNumber from './InputNumber'
 
 const AddDisappearanceData = ({register_Data, button_next}) => {
 
@@ -20,35 +21,14 @@ const AddDisappearanceData = ({register_Data, button_next}) => {
             <View style={styles.card}>
                 <View style={{ flex: 10 }}>
                     <ScrollView>
-                        <InputText title={'Donde se dirigia'} placeHolder={'Joel Matias'} errorMessage='' inputChangeValue={(value)=>register_Data.setDireccion(value)} />
+                        <InputText title={'Donde se dirigia'} placeHolder={'Se dirigia al lugar ...'} errorMessage='' inputChangeValue={(value)=>register_Data.setDireccion(value)} />
   
-                        <DateTimeComponent /> 
+                        <DateTimeComponent separeAtribbute={true} onDateChange={(date,hour) => { register_Data.setFecha_desaparicion(date), register_Data.setHora_desaparicion(hour) }} /> 
 
-                        <InputText title={'Ultima ropa que traia puesta'} placeHolder={'Fernandez de las casas'} errorMessage='' inputChangeValue={(value)=>register_Data.setUltima_ropa_puesta(value)}/>
+                        <InputText title={'Ultima ropa que traia puesta'} placeHolder={'Polera blanca porcelana'} errorMessage='' inputChangeValue={(value)=>register_Data.setUltima_ropa_puesta(value)}/>
+                        <InputText title={'Enfermedades'} placeHolder={'Diabetes tipo 1'} errorMessage='' inputChangeValue={(value)=>register_Data.setEnfermedad(value)}/>
+                        <InputNumber title={'Contacto'} placeHolder={'700000XX'} errorMessage='' inputChangeValue={(value)=>register_Data.setContacto(value)}/>
 
-                        <SelectModal
-                        title_select='Enfermedades'
-                        labelSelect={diseases.selectedOption.label}
-                        options={[
-                        { id: 1, label: 'Boliviano' },
-                        { id: 2, label: 'Español' },
-                        { id: 3, label: 'Argentino' },
-                        ]}
-                        onOptionSelect={diseases.handleOptionSelect}
-                        value_id={(value_id)=> register_Data.setEnfermedad(value_id)}
-                        />
-                        <SelectModal
-                            title_select='Contactos'
-                            labelSelect={contacts.selectedOption.label}
-                            options={[
-                            { id: 1, label: 'Quechua' },
-                            { id: 2, label: 'Español' },
-                            { id: 3, label: 'Aymara' },
-                            { id: 4, label: 'Frances' },
-                            ]}
-                            onOptionSelect={contacts.handleOptionSelect}
-                            value_id={(value_id)=> register_Data.setContacto(value_id)}
-                        />
 
                     </ScrollView>
                 </View>

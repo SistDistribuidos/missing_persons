@@ -7,13 +7,17 @@ import SelectModal from '../ModalSelect';
 import useSelected from '../../application/UseSelected';
 import { Input, Icon } from '@rneui/themed';
 
-const DateTimeComponent = () => {
+const DateTimeComponent = ({onDateChange, onlyDate, separeAtribbute}) => {
 
     const [date, setDate] = useState(new Date(1598051730000));
 
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate;
         setDate(currentDate);
+        if (!separeAtribbute)
+        onDateChange(onlyDate? saveOnlyDate(currentDate) : currentDate);
+        else
+        onDateChange(saveOnlyDate(currentDate), saveOnlyHour(currentDate));
     };
 
     const showMode = (currentMode) => {
@@ -31,6 +35,26 @@ const DateTimeComponent = () => {
     const showTimepicker = () => {
         showMode('time');
     };
+
+    const getOnlyDate = (date) => {
+        const day = date.getDate(); 
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    };
+
+    const saveOnlyDate = (date) => {
+        const day = date.getDate(); 
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear();
+        return `${year}/${month}/${day}`;
+    };
+
+    const saveOnlyHour = (date) => {
+        const hour = date.getHours(); 
+        const minutes = date.getMinutes();
+        return `${hour}:${minutes}`;
+    };
     
     const selectNacionality = useSelected();    
     return (
@@ -41,15 +65,15 @@ const DateTimeComponent = () => {
                         <Text style={{fontWeight: 'bold', paddingLeft: 30, fontSize: 18}}>Fecha</Text>
                     </TouchableOpacity>
                 </View>
-                <View  style={{flex:1}}>
+                {!onlyDate && <View  style={{flex:1}}>
                     <TouchableOpacity onPress={showTimepicker}>
                         <Text style={{fontWeight: 'bold', textAlign:'right', paddingRight: 30, fontSize: 18}}>Hora</Text>
                     </TouchableOpacity>
-                </View>
+                </View>}
             </View>
             <View style={{flex:1, marginHorizontal: 20}}>
                 <Input
-                    placeholder={date.toLocaleString()}
+                    placeholder={onlyDate?getOnlyDate(date):date.toLocaleString()}
                     rightIcon={{ type: 'font-awesome', name: 'clock-o' }}
                     editable={false}
                 />

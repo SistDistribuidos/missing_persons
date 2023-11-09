@@ -5,7 +5,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { Image } from 'react-native';
 import Colors from '../domain/Colors';
 
-const UploadPhoto = () => {
+const UploadPhoto = ({setImages}) => {
 
 
     const [image, setImage] = useState(null);
@@ -33,8 +33,10 @@ const UploadPhoto = () => {
         if (!result.canceled) {
             if(image==null){
                 setImage(result.assets[0].uri);
+                setImages(result.assets[0].uri, 'denuncia');
             }else{
                 setImage2(result.assets[0].uri);
+                setImages(result.assets[0].uri, 'foto');
             }
         }
     };
