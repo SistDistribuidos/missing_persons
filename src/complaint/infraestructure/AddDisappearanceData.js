@@ -42,7 +42,9 @@ const AddDisappearanceData = ({register_Data, button_next}) => {
 
 const styles = StyleSheet.create({
     card: {
-        flex: 1, backgroundColor: Colors.FONDO, margin: 20, borderRadius: 20,
+        flex: 1, backgroundColor: Colors.FONDO, 
+        margin: 20,
+        borderRadius: 20,
         //   backgroundColor: 'rgb(0, 160, 0)',
         //   borderTopRightRadius: 25,
         //   borderBottomRightRadius: 25,

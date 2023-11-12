@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const apiService = axios.create({
-  baseURL: 'http://192.168.1.11/api', 
+  baseURL: 'http://personasdesaparecidas.test/api', 
 });
 
 export const getDatos = async (endpoint) => {

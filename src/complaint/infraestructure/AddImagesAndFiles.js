@@ -1,4 +1,4 @@
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, ScrollView, FlatList } from 'react-native'
 import React, { useState } from 'react'
 import ButtonNext from './components/ButtonNext'
 import Colors from '../domain/Colors'
@@ -22,13 +22,17 @@ const AddImagesAndFiles = ({register_Data}) => {
 
         <View style={{ flex: 1 }}>
             <View style={styles.card}>
-                <View style={{ flex: 10 }}>
-                    <View style={{ flex: 1}}>
-                        <UploadPhoto setImages={setImages} />
-                    </View>
-                    <View style={{ flex: 1 }}>
-                        <RegisterUbication />
-                    </View>
+                <View style={{ flex: 10, backgroundColor: 'purple' }}>
+                    <FlatList>
+                    {/* <ScrollView> */}
+                        <View style={{ flex: 1, backgroundColor:'blue'}}>
+                            <UploadPhoto setImages={setImages} />
+                        </View>
+                        <View style={{ flex: 1, backgroundColor:'red' }}>
+                            <RegisterUbication />
+                        </View>
+                    </FlatList>
+                    {/* </ScrollView> */}
                 </View>
                 <View style={{ marginBottom: -15 }}>
                     <ButtonNext title="Enviar" />
