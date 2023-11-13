@@ -1,11 +1,11 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import InputText from './InputText'
-import SelectModal from './ModalSelect'
 import UseSelected from '../application/UseSelected'
 import ButtonComponent from './ButtonComponent'
 import Colors from '../domain/Colors'
 import { Dimensions } from 'react-native';
+import SelectModal from './components/ModalSelect'
 
 const DataAtTheTimeOfDisappearance = ({register_Data, publishButtonPressed, backButtonPressed}) => {
     

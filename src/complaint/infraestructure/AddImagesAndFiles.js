@@ -22,17 +22,19 @@ const AddImagesAndFiles = ({register_Data}) => {
 
         <View style={{ flex: 1 }}>
             <View style={styles.card}>
-                <View style={{ flex: 10, backgroundColor: 'purple' }}>
-                    <FlatList>
-                    {/* <ScrollView> */}
+                <View style={{ flex: 10
+                    // , backgroundColor: 'purple'
+                    }}>
+                    {/* <FlatList> */}
+                    <ScrollView>
                         <View style={{ flex: 1, backgroundColor:'blue'}}>
                             <UploadPhoto setImages={setImages} />
                         </View>
                         <View style={{ flex: 1, backgroundColor:'red' }}>
                             <RegisterUbication />
                         </View>
-                    </FlatList>
-                    {/* </ScrollView> */}
+                    {/* </FlatList> */}
+                    </ScrollView>
                 </View>
                 <View style={{ marginBottom: -15 }}>
                     <ButtonNext title="Enviar" />

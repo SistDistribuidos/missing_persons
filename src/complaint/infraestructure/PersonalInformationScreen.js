@@ -4,10 +4,10 @@ import ComponentHeader from './components/ComponentHeader'
 import DataModal from '../domain/DataModal'
 import useModal from '../application/UseModal'
 import InputText from './InputText'
-import SelectModal from './ModalSelect'
 import UseSelected from '../application/UseSelected'
 import ButtonComponent from './ButtonComponent'
 import Colors from '../domain/Colors'
+import SelectModal from './components/ModalSelect'
 
 const PersonalInformationScreen = ({register_Data, nextButtonPressed, antButtonPressed}) => {
 

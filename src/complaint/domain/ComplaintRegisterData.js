@@ -172,6 +172,25 @@ class ComplaintRegisterData {
     getHora_desaparicion() {
         return this.hora_desaparicion;
     }       
+
+    fillViewComplete(number_view){
+        if(number_view == 2){
+            return this.firstViewComplete();
+        }else{
+            return true;
+        }
+    }
+    firstViewComplete(){
+        if(this.nombre != '' && this.genero != '' && this.fechas_nacimiento != '' && 
+        this.idioma_id != '' && this.nacionalidad_id != ''){
+            return true;
+        }else{
+            if(this.nombre == ''){
+
+            }
+            return false;
+        }
+    }
   }
   
   export default ComplaintRegisterData;

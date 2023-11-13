@@ -9,14 +9,15 @@ export const getNationalities = async () => {
         listOfNationalities.forEach(element => {
             const newElement = {
                 id: element.id,
-                label: element.nacionalidad
+                label: element.nacionalidad,
+                code_icon: element.codigo_icono,
             };
             elementsLabel.push(newElement);
         });
         console.log(elementsLabel);
         return elementsLabel;
-    } catch {
-
+    } catch (error) {
+        console.error('error al cargar nacionalidades', error);
     }
     
 }

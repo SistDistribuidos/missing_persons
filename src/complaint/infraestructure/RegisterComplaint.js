@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import ComponentHeader from './components/ComponentHeader'
 import DataModal from '../domain/DataModal'
 import useModal from '../application/UseModal'
-import ModalSwal from './ModalSwal'
+import ModalSwal from './components/ModalSwal'
 import AddInformation from './AddInformation'
 import Colors from '../domain/Colors'
 import ComplaintRegisterData from '../domain/ComplaintRegisterData'
@@ -13,6 +13,8 @@ import * as Animatable from 'react-native-animatable';
 import AddAppearance from './AddAppearance'
 import AddDisappearanceData from './AddDisappearanceData'
 import AddImagesAndFiles from './AddImagesAndFiles'
+import IncompleteFormModal from '../../application/components/IncompleteFormModal'
+import FormIncomplete from '../application/FormIncomplete'
 
 const RegisterComplaint = () => {
   const [viewScreen, setViewScreen] = useState(1)
@@ -21,8 +23,10 @@ const RegisterComplaint = () => {
   value_modal.setTitle("NUEVA PUBLICACION !!!");
   value_modal.setDescription("Lamentamos mucho la situacion en la que te encuentras, esperamos que esto ayude a encontrar a esa persona para que puedas reunirte con ella en un futuro. ");
   const modalSwal = useModal(true);
-
-  const data_complaint_register = new ComplaintRegisterData();
+  
+  const modal_form_incomplete = FormIncomplete();
+  
+  const [data_complaint_register, setData_complaint_register] = useState(new ComplaintRegisterData());
 
   const select_progres_line = (val) => {
     if (val<viewScreen) {
@@ -39,6 +43,13 @@ const RegisterComplaint = () => {
       }
     }
   }
+  const nextScreen = (val) => {
+    if(data_complaint_register.fillViewComplete(val)){
+      setViewScreen(val);
+    }else{
+      modal_form_incomplete.showAgain();
+    }
+  }
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -50,6 +61,14 @@ const RegisterComplaint = () => {
         description={value_modal.getDescription()}
       />
 
+      <IncompleteFormModal  
+        visible={modal_form_incomplete.visible}
+        onClose={modal_form_incomplete.handleCloseModal}
+        onAccept={modal_form_incomplete.handleCloseModal}
+        title='ERROR !!!'
+        description="Es necesario que rellene todo el formulario !!!"
+      />
+      
       <ComponentHeader name_app='Registrar Denuncia'>
       </ComponentHeader>
 
@@ -59,28 +78,28 @@ const RegisterComplaint = () => {
           animation={viewScreen === 1 ? 'bounceInUp' : 'fadeOutUp'} duration={1500}
           style={{ flex: 1, display: viewScreen === 1 ? 'flex' : 'none' }}
         >
-          <AddInformation register_Data={data_complaint_register} button_next={(val) => setViewScreen(val)} />
+          <AddInformation register_Data={data_complaint_register} button_next={(val) => nextScreen(val)} />
         </Animatable.View>
 
         <Animatable.View
           animation={viewScreen === 2 ? 'bounceInUp' : 'fadeOutUp'} duration={1500}
           style={{ flex: 1, display: viewScreen === 2 ? 'flex' : 'none' }}
         >
-          <AddAppearance register_Data={data_complaint_register} button_next={(val) => setViewScreen(val)}></AddAppearance>
+          <AddAppearance register_Data={data_complaint_register} button_next={(val) => nextScreen(val)}></AddAppearance>
         </Animatable.View>
 
         <Animatable.View
           animation={viewScreen === 3 ? 'bounceInUp' : 'fadeOutUp'} duration={1500}
           style={{ flex: 1, display: viewScreen === 3 ? 'flex' : 'none' }}
         >
-          <AddDisappearanceData register_Data={data_complaint_register} button_next={(val) => setViewScreen(val)} />
+          <AddDisappearanceData register_Data={data_complaint_register} button_next={(val) => nextScreen(val)} />
         </Animatable.View>
 
         <Animatable.View
           animation={viewScreen === 4 ? 'bounceInUp' : 'fadeOutUp'} duration={1500}
           style={{ flex: 1, display: viewScreen === 4 ? 'flex' : 'none' }}
         >
-          <AddImagesAndFiles register_Data={data_complaint_register} button_next={(val) => setViewScreen(val)} />
+          <AddImagesAndFiles register_Data={data_complaint_register} button_next={(val) => nextScreen(val)} />
         </Animatable.View>
 
       </View>

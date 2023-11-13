@@ -1,6 +1,5 @@
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
-import ModalSwal from './ModalSwal'
 import DataModal from '../domain/DataModal'
 import useModal from '../application/UseModal'
 import PersonalInformationScreen from './PersonalInformationScreen'
@@ -12,6 +11,7 @@ import InformationAndFilesButton from './InformationAndFilesButton'
 import * as Animatable from 'react-native-animatable';
 import ButtonComponent from './ButtonComponent'
 import Colors from '../domain/Colors'
+import ModalSwal from './components/ModalSwal'
 
 const MenuComplaintScreen = () => {
 

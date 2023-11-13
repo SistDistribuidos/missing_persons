@@ -3,7 +3,6 @@ import React from 'react'
 // import DatePicker from 'react-native-datepicker';
 import { useState } from 'react';
 import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
-import SelectModal from '../ModalSelect';
 import useSelected from '../../application/UseSelected';
 import { Input, Icon } from '@rneui/themed';
 
@@ -56,25 +55,32 @@ const DateTimeComponent = ({onDateChange, onlyDate, separeAtribbute}) => {
         return `${hour}:${minutes}`;
     };
     
-    const selectNacionality = useSelected();    
     return (
         <View style={{flex:1}}>
             <View style={{flex:1, flexDirection: 'row'}}>
                 <View style={{flex:1}}>
                     <TouchableOpacity onPress={showDatepicker}>
-                        <Text style={{fontWeight: 'bold', paddingLeft: 30, fontSize: 18}}>Fecha</Text>
+                        <Text style={{fontWeight: 'bold', paddingLeft: 20}}>Fecha</Text>
                     </TouchableOpacity>
                 </View>
                 {!onlyDate && <View  style={{flex:1}}>
                     <TouchableOpacity onPress={showTimepicker}>
-                        <Text style={{fontWeight: 'bold', textAlign:'right', paddingRight: 30, fontSize: 18}}>Hora</Text>
+                        <Text style={{fontWeight: 'bold', textAlign:'right', paddingRight: 30}}>Hora</Text>
                     </TouchableOpacity>
                 </View>}
             </View>
             <View style={{flex:1, marginHorizontal: 20}}>
                 <Input
                     placeholder={onlyDate?getOnlyDate(date):date.toLocaleString()}
-                    rightIcon={{ type: 'font-awesome', name: 'clock-o' }}
+                    value={onlyDate?getOnlyDate(date):date.toLocaleString()}
+                    rightIcon={ !onlyDate &&
+                        <Icon type= 'font-awesome' name= 'clock-o'  onPress={showTimepicker}
+                        />
+                    }
+                    leftIcon={ 
+                        <Icon type= 'font-awesome' name= 'calendar' onPress={showDatepicker} 
+                        />
+                    }
                     editable={false}
                 />
             </View>
