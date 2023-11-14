@@ -44,11 +44,12 @@ const RegisterComplaint = () => {
     }
   }
   const nextScreen = (val) => {
-    if(data_complaint_register.fillViewComplete(val)){
+    console.log('=====>> ', data_complaint_register);
+    // if(data_complaint_register.fillViewComplete(val)){
       setViewScreen(val);
-    }else{
-      modal_form_incomplete.showAgain();
-    }
+    // }else{
+    //   modal_form_incomplete.showAgain();
+    // }
   }
 
   return (

@@ -31,7 +31,8 @@ export const getColors = async () => {
         listOfColors.forEach(element => {
             const newElement = {
                 id: element.id,
-                label: element.nombre
+                label: element.nombre,
+                // image_path: "../../../domain/assets/hair/"+ element.nombre +".png"
             };
             elementsLabel.push(newElement);
         });

@@ -10,6 +10,8 @@ import useSelected from '../application/UseSelected'
 import InputNumber from './InputNumber'
 import  { getColors } from './../../application/services/ValuesService'
 import { useState, useEffect } from 'react'
+import ModalHairColour from './components/ModalHairColour'
+import ModalEyeColour from './components/ModalEyeColour'
 
 const AddAppearance = ({register_Data, button_next}) => {
 
@@ -40,7 +42,7 @@ const AddAppearance = ({register_Data, button_next}) => {
             <View style={styles.card}>
                 <View style={{ flex: 10 }}>
                     <ScrollView>
-                        <SelectModal
+                        <ModalHairColour
                             title_select='Color de cabello'
                             labelSelect={hair_colour.selectedOption.label}
                             onOptionSelect={hair_colour.handleOptionSelect}
@@ -51,7 +53,7 @@ const AddAppearance = ({register_Data, button_next}) => {
                           <InputNumber style={{width: 90}} title={'Altura'} placeHolder={'0.00'} errorMessage='' inputChangeValue={(value)=>register_Data.setAltura(value)} />
                           <InputNumber style={{width: 90}} title={'Peso'} placeHolder={'0.00'} errorMessage='' inputChangeValue={(value)=>register_Data.setPeso(value)} />
                         </View>
-                        <SelectModal
+                        <ModalEyeColour
                             title_select='Color de Ojos'
                             labelSelect={eye_color.selectedOption.label}
                             options={options_colors}

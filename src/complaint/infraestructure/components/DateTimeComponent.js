@@ -8,9 +8,11 @@ import { Input, Icon } from '@rneui/themed';
 
 const DateTimeComponent = ({onDateChange, onlyDate, separeAtribbute}) => {
 
-    const [date, setDate] = useState(new Date(1598051730000));
+    const [date, setDate] = useState(new Date());
+    const [visiblePlaceholder, setVisiblePlaceholder] = useState(true);
 
     const onChange = (event, selectedDate) => {
+        setVisiblePlaceholder(false);
         const currentDate = selectedDate;
         setDate(currentDate);
         if (!separeAtribbute)
@@ -71,8 +73,8 @@ const DateTimeComponent = ({onDateChange, onlyDate, separeAtribbute}) => {
             </View>
             <View style={{flex:1, marginHorizontal: 20}}>
                 <Input
-                    placeholder={onlyDate?getOnlyDate(date):date.toLocaleString()}
-                    value={onlyDate?getOnlyDate(date):date.toLocaleString()}
+                    placeholder={'Seleccione'}
+                    value={!visiblePlaceholder? onlyDate? getOnlyDate(date):date.toLocaleString() : ''}
                     rightIcon={ !onlyDate &&
                         <Icon type= 'font-awesome' name= 'clock-o'  onPress={showTimepicker}
                         />
