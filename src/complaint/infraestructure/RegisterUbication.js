@@ -3,11 +3,13 @@ import React, { useState } from 'react'
 import { Icon } from '@rneui/themed';
 import ModalRegisterMaps from './ModalRegisterMaps';
 
-const RegisterUbication = () => {
+const RegisterUbication = ({ubication_selected}) => {
     const [visibilityUbicationModal, setVisibilityUbicationModal] = useState(false)
   return (
     <View style={{flex:1}}>
-        <ModalRegisterMaps visible={visibilityUbicationModal} onClose={()=> setVisibilityUbicationModal(false)}></ModalRegisterMaps>
+        <ModalRegisterMaps visible={visibilityUbicationModal} onClose={()=> setVisibilityUbicationModal(false)}
+          ubication_selected={ubication_selected}
+        ></ModalRegisterMaps>
 
         <View style={{flex:1}}>
             <Text style={{textAlign: 'center', fontWeight: 'bold', fontSize: 20 }}>Subir Ubicación</Text>
