@@ -176,18 +176,41 @@ class ComplaintRegisterData {
     fillViewComplete(number_view){
         if(number_view == 2){
             return this.firstViewComplete();
+        }else if(number_view == 3){
+            return this.secondViewComplete();
+        }else if(number_view == 4){
+            return this.thirdViewComplete();
         }else{
             return true;
         }
     }
     firstViewComplete(){
-        if(this.nombre != '' && this.genero != '' && this.fechas_nacimiento != '' && 
-        this.idioma_id != '' && this.nacionalidad_id != ''){
+        if(this.nombre != '' && this.genero != '' && this.fechas_nacimiento != '' && this.idioma_id != '' && this.nacionalidad_id != ''){
             return true;
         }else{
-            if(this.nombre == ''){
-
-            }
+            return false;
+        }
+    }
+    secondViewComplete(){
+        if(this.color_cabello != '' && this.altura != '' && this.peso != '' && 
+        this.color_ojos != '' && this.cicatriz != '' && this.tatuaje != ''){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    thirdViewComplete(){
+        if(this.direccion != '' && this.fecha_desaparicion != '' && this.hora_desaparicion != '' && this.ultima_ropa_puesta != '' && this.enfermedad != '' && this.contacto != '' ){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    fourthViewComplete(){
+        if(this.ubicación != '' ){
+            return true;
+        }else{
             return false;
         }
     }

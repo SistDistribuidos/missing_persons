@@ -15,12 +15,13 @@ import AddDisappearanceData from './AddDisappearanceData'
 import AddImagesAndFiles from './AddImagesAndFiles'
 import IncompleteFormModal from '../../application/components/IncompleteFormModal'
 import FormIncomplete from '../application/FormIncomplete'
+import FormFilled from '../../application/components/FormFilled'
 
-const RegisterComplaint = ({ route }) => {
+const RegisterComplaint = ({navigation }) => {
   const [viewScreen, setViewScreen] = useState(1)
 
-  const { data } = route.params;
-  console.log('ingresa a visualizar ', data);
+  // const { data } = route.params;
+  // console.log('ingresa a visualizar ', data);
 
   const value_modal = new DataModal();
   value_modal.setTitle("NUEVA PUBLICACION !!!");
@@ -28,6 +29,7 @@ const RegisterComplaint = ({ route }) => {
   const modalSwal = useModal(true);
   
   const modal_form_incomplete = FormIncomplete();
+  const form_filled = FormIncomplete();
   
   const [data_complaint_register, setData_complaint_register] = useState(new ComplaintRegisterData());
 
@@ -48,12 +50,19 @@ const RegisterComplaint = ({ route }) => {
   }
   const nextScreen = (val) => {
     console.log('=====>> ', data_complaint_register);
-    // if(data_complaint_register.fillViewComplete(val)){
+    if(data_complaint_register.fillViewComplete(val)){
       setViewScreen(val);
-    // }else{
-    //   modal_form_incomplete.showAgain();
-    // }
+    }else{
+      modal_form_incomplete.showAgain();
+    }
+    if(val== 5 ){
+      form_filled.showAgain();
+    }
+    
   }
+  const goBack = () => {
+    navigation.goBack(); // Esta función lleva de vuelta a la pantalla anterior
+  };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -73,6 +82,15 @@ const RegisterComplaint = ({ route }) => {
         description="Es necesario que rellene todo el formulario !!!"
       />
       
+      
+      <FormFilled  
+        visible={form_filled.visible}
+        onClose={form_filled.handleCloseModal}
+        onAccept={()=> {form_filled.handleCloseModal(), goBack()}}
+        title='Completado !!!'
+        description="Formulario completado con exito !!!"
+      />
+
       <ComponentHeader name_app='Registrar Denuncia'>
       </ComponentHeader>
 

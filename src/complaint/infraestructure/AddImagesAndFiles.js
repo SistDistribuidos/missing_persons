@@ -5,7 +5,7 @@ import Colors from '../domain/Colors'
 import UploadPhoto from './UploadPhoto'
 import RegisterUbication from './RegisterUbication'
 
-const AddImagesAndFiles = ({register_Data}) => {
+const AddImagesAndFiles = ({register_Data, button_next}) => {
 
     const [denunciaImage, setDenunciaImage] = useState(null);
     const [fotoImage, setFotoImage] = useState(null);
@@ -27,17 +27,17 @@ const AddImagesAndFiles = ({register_Data}) => {
                     }}>
                     {/* <FlatList> */}
                     <ScrollView>
-                        <View style={{ flex: 1, backgroundColor:'blue'}}>
+                        <View style={{ flex: 1}}>
                             <UploadPhoto setImages={setImages} />
                         </View>
-                        <View style={{ flex: 1, backgroundColor:'red' }}>
-                            <RegisterUbication />
+                        <View style={{ flex: 1}}>
+                            <RegisterUbication ubication_selected={(val)=> register_Data.setUbicación(val)} />
                         </View>
                     {/* </FlatList> */}
                     </ScrollView>
                 </View>
                 <View style={{ marginBottom: -15 }}>
-                    <ButtonNext title="Enviar" />
+                    <ButtonNext title="Enviar" clickButtonNext={()=> button_next(5)} />
                 </View>
             </View>
         </View>

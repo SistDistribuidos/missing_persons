@@ -10,7 +10,7 @@ export const getNationalities = async () => {
             const newElement = {
                 id: element.id,
                 label: element.nacionalidad,
-                code_icon: element.codigo_icono,
+                code_icon: element.code_icon,
             };
             elementsLabel.push(newElement);
         });

@@ -5,7 +5,7 @@ import { Button } from 'react-native'
 import MapView, {Marker} from 'react-native-maps';
 import Colors from '../domain/Colors';
 
-const ModalRegisterMaps = ({ visible, onAccept, onClose }) => {
+const ModalRegisterMaps = ({ visible, onAccept, onClose, ubication_selected }) => {
 
     const [selectedLocation, setSelectedLocation] = useState(null);
     const [ubicationInit, setUbicationInit] = useState({
@@ -19,7 +19,10 @@ const ModalRegisterMaps = ({ visible, onAccept, onClose }) => {
         console.log('ubicacion => ', latitude, longitude );
         setSelectedLocation({ latitude, longitude });
     };
-
+    const ubicationSelected = (val) => {
+        ubication_selected(selectedLocation);
+        onClose()
+    }
     return (
         <Modal transparent={true} visible={visible} animationType="slide">
             <View style={{ justifyContent: 'center', alignItems: 'center', justifyContent: 'center' }}>
@@ -41,7 +44,7 @@ const ModalRegisterMaps = ({ visible, onAccept, onClose }) => {
                         <Button title="Cancelar" onPress={onClose} color={Colors.RED}/>
                     </View>
                     <View style={styles.buttonRight}>
-                        <Button title="Aceptar" onPress={() => console.log('Botón presionado')} color={Colors.GREEN}/>
+                        <Button title="Aceptar" onPress={(val) => ubicationSelected(val)} color={Colors.GREEN}/>
                     </View>
                 </View>
                 
