@@ -16,8 +16,11 @@ import AddImagesAndFiles from './AddImagesAndFiles'
 import IncompleteFormModal from '../../application/components/IncompleteFormModal'
 import FormIncomplete from '../application/FormIncomplete'
 
-const RegisterComplaint = () => {
+const RegisterComplaint = ({ route }) => {
   const [viewScreen, setViewScreen] = useState(1)
+
+  const { data } = route.params;
+  console.log('ingresa a visualizar ', data);
 
   const value_modal = new DataModal();
   value_modal.setTitle("NUEVA PUBLICACION !!!");
