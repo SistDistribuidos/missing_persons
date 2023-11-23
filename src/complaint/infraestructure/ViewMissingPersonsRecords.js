@@ -1,6 +1,8 @@
 import { View, Text, FlatList, TouchableHighlight, TouchableOpacity, Image, StyleSheet } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Colors from '../domain/Colors'
+import { useNavigation } from '@react-navigation/native';
+import { getHistory } from '../../application/services/ValuesService';
 
 const ViewMissingPersonsRecords = ({complaint_id}) => {
     let data = [
@@ -8,9 +10,16 @@ const ViewMissingPersonsRecords = ({complaint_id}) => {
         { id: 2, nombre: 'fulanito', apellido: 'de tal', key: 'item2', estado: 'Aceptado', descripcion: 'Visto por ultima vez por el 8vo anillo zona de la  guradia viste de una cammisa azul y pantalones jean, cualquier informacion...', imagen1: 'https://picsum.photos/200', imagen2: 'https://picsum.photos/200' }, 
         { id: 3, nombre: 'pepe', apellido: 'de las casas', key: 'item3', estado: 'Rechazado', descripcion: 'Visto por ultima vez por el 8vo anillo zona de la  guradia viste de una cammisa azul y pantalones jean, cualquier informacion...', imagen1: 'https://picsum.photos/200', imagen2: 'https://picsum.photos/200' }
     ];
-    const screen_complaint = (item_id) =>{
-        complaint_id(item_id);
-    }
+
+    const [dataList, setDataList] = useState([]);
+    useEffect(() => {
+        getHistory().then((response) => {
+            setDataList(response);
+        }).catch((e)=> {
+            console.log(e);
+        })
+    },[]);
+    const navigation = useNavigation();
     const renderItem = ({ item }) => {
         
         const select_color_estado = (estado) =>{
@@ -100,7 +109,7 @@ const ViewMissingPersonsRecords = ({complaint_id}) => {
                         />
                     ))
                 }
-                data={data}
+                data={dataList}
                 renderItem={renderItem}
             />
         </View>

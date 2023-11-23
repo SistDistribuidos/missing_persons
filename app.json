@@ -5,6 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "scheme": "com.moviltopicos.dilkerproject",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -19,6 +20,8 @@
     },
     "android": {
       "config": {
+        "package": "com.moviltopicos.dilkerproject",
+        "googleServicesFile": "./google-services.json",
         "googleMaps": {
           "apiKey": "AIzaSyDpHCkEHm9CjgMRU5lystBiR8jXxIDNa4s"
         }
@@ -27,6 +30,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
+     
     },
     "web": {
       "favicon": "./assets/favicon.png"

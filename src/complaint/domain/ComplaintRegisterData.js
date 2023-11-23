@@ -14,7 +14,7 @@ class ComplaintRegisterData {
       this.fecha_desaparicion = '';
       this.hora_desaparicion = '';
       this.ultima_ropa_puesta = '';
-      this.ubicación = '';
+      this.ubicacion = '';
       this.user_id = '';
       this.nacionalidad_id = '';
       this.documento_id = '';
@@ -23,6 +23,7 @@ class ComplaintRegisterData {
       this.estado = '';
       this.enfermedad = '';
       this.contacto = '';
+      this.image = '';
     }
     setEnfermedad(enfermedad) {
         this.enfermedad = enfermedad;
@@ -106,11 +107,11 @@ class ComplaintRegisterData {
     getDireccion() {
         return this.direccion;
     }
-    setUbicación(ubicación) {
-        this.ubicación = ubicación;
+    setUbicacion(ubicacion) {
+        this.ubicacion = ubicacion;
     }
-    getUbicación() {
-        return this.ubicación;
+    getUbicacion() {
+        return this.ubicacion;
     }
     
     setUser_id(user_id) {
@@ -171,7 +172,13 @@ class ComplaintRegisterData {
     }
     getHora_desaparicion() {
         return this.hora_desaparicion;
-    }       
+    }
+    setImage(imageUri) {
+        this.image = imageUri;
+    }
+    getImage() {
+        return this.image;
+    }     
 
     fillViewComplete(number_view){
         if(number_view == 2){
@@ -208,7 +215,7 @@ class ComplaintRegisterData {
     }
     
     fourthViewComplete(){
-        if(this.ubicación != '' ){
+        if(this.ubicacion != '' ){
             return true;
         }else{
             return false;
