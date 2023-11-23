@@ -1,4 +1,4 @@
-import { View, Text, Modal, StyleSheet, TouchableWithoutFeedback, ScrollView, Image } from 'react-native'
+import { View, Text, Modal, StyleSheet, TouchableWithoutFeedback, ScrollView, Image, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import CarouselImages from './components/CarouselImages';
 import { Divider } from '@rneui/themed';
@@ -10,11 +10,13 @@ import Flag from 'react-native-flags';
 import MapaWithUbication from './components/MapaWithUbication';
 import CarouselImagesGallery from './components/CarouselImagesGallery';
 import { Dimensions } from 'react-native';
+import ReportSighting from './components/ReportSighting';
 
-const ViewMissingsPersons = ({ modal_visible, close_modal, data_complaint }) => {
+const ViewMissingsPersons = ({ modal_visible, close_modal, data_complaint, is_home }) => {
     
     const { width, height } = Dimensions.get('window');
     const [viewGallery, setViewGallery] = useState(false)
+    const [sightingReport, setSightingReport] = useState(false)
 
     const selected_color_hair = (color) =>{
         if(color == 'Amarillo'){
@@ -83,6 +85,21 @@ const ViewMissingsPersons = ({ modal_visible, close_modal, data_complaint }) => 
             >
                 <View style={styles.modalContainer}>
                     <CarouselImagesGallery images={[data_complaint.imagen1, data_complaint.imagen1]} height={height} width={width} />
+                </View>
+            </Modal>
+        )
+    }
+
+    if(sightingReport){
+        return (
+            <Modal
+                transparent={false}
+                visible={modal_visible}
+                animationType="slide"
+                onRequestClose={()=>setSightingReport(false)}
+            >
+                <View style={styles.modalContainer}>
+                    <ReportSighting images={[data_complaint.imagen1, data_complaint.imagen1]} height={height} width={width} />
                 </View>
             </Modal>
         )
@@ -202,6 +219,15 @@ const ViewMissingsPersons = ({ modal_visible, close_modal, data_complaint }) => 
                                         <Text style={{fontWeight:'bold', fontSize: 20, color: Colors.RED, textAlign: 'center'}}>¿ Me viste ? llama al </Text>
                                         <Text style={{fontWeight:'400', fontSize: 20, marginLeft: 10, color: Colors.RED, textAlign: 'center'}}>{data_complaint.contacto}</Text>
                                     </View>
+                                    {is_home==true?
+                                            <TouchableOpacity onPress={()=> {console.log('reportar avistamiento '),setSightingReport(true)}} 
+                                                            style={{padding: 10, backgroundColor: Colors.RED, borderRadius: 16}}
+                                            >
+                                                        <Text style={{textAlign: 'center', color: Colors.WHITE, fontSize: 18, fontWeight: '700'}} >Reportar avistamiento</Text>
+                                            </TouchableOpacity>
+                                        :
+                                            <></>
+                                    }
                                 </View>
                             </View>
 

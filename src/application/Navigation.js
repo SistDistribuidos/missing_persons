@@ -45,7 +45,7 @@ const Tab = createBottomTabNavigator();
 function MyTabs() {
     return (
         <Tab.Navigator
-            initialRouteName='Complaints'
+            initialRouteName='home'
             screenOptions={{
                 tabBarActiveTintColor: Colors.RED
             }}
@@ -56,6 +56,7 @@ function MyTabs() {
                     tabBarIcon: ({ color, size})=>(
                         <MaterialCommunityIcons name="home" size={30} color="black" />
                     ),
+                    headerShown: false,
                     tabBarBadge: 10
                 }}    
             />

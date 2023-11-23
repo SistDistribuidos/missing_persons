@@ -51,11 +51,11 @@ const RegisterComplaint = ({navigation }) => {
   }
   const nextScreen = (val) => {
     console.log('=====>> ', data_complaint_register);
-    if(data_complaint_register.fillViewComplete(val)){
+    // if(data_complaint_register.fillViewComplete(val)){
       setViewScreen(val);
-    }else{
-      modal_form_incomplete.showAgain();
-    }
+    // }else{
+    //   modal_form_incomplete.showAgain();
+    // }
     if(val== 5 ){
       form_filled.showAgain();
       sendData(data_complaint_register)

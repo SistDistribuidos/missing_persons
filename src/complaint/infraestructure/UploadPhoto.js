@@ -58,7 +58,7 @@ const UploadPhoto = ({setImages}) => {
                 :
                 <View style={{ flex: 1 }} >
                     <View style={{ flex: 1 }}>
-                        <Text style={{ fontWeight: 'bold', fontSize: 20, textAlign: 'center' }}>Subir Fotos de Referencia</Text>
+                        <Text style={{ fontWeight: 'bold', fontSize: 20, textAlign: 'center', marginBottom: 15 }}>Subir Fotos de Referencia</Text>
                     </View>
                     <View style={{ flex: 5 }}>
                         <View style={{ flexDirection: 'row', flex:1 }}>

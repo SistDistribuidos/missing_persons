@@ -7,6 +7,8 @@ import RegisterUbication from './RegisterUbication'
 
 const AddImagesAndFiles = ({register_Data, button_next}) => {
 
+    const [ubication, setUbication] = useState('');
+
     const [denunciaImage, setDenunciaImage] = useState(null);
     const [fotoImage, setFotoImage] = useState(null);
 
@@ -35,7 +37,9 @@ const AddImagesAndFiles = ({register_Data, button_next}) => {
                             <UploadPhoto setImages={setImages} />
                         </View>
                         <View style={{ flex: 1}}>
-                            <RegisterUbication ubication_selected={(val)=> register_Data.setUbicacion(val)} />
+                            
+                            {/* <RegisterUbication ubication_selected={(val) => setUbication(val)} exist_ubication={ubication!= ''? true: false} /> */}
+                            <RegisterUbication ubication_selected={(val)=> {setUbication(val), register_Data.setUbicacion(val)}} exist_ubication={ubication!= ''? true: false}/>
                         </View>
                     {/* </FlatList> */}
                     </ScrollView>
