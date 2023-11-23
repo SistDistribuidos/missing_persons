@@ -1,17 +1,17 @@
 import { View, Text, FlatList, TouchableHighlight, TouchableOpacity, Image, StyleSheet } from 'react-native'
 import React from 'react'
 import Colors from '../domain/Colors'
-import { useNavigation } from '@react-navigation/native';
 
-const ViewMissingPersonsRecords = () => {
+const ViewMissingPersonsRecords = ({complaint_id}) => {
     let data = [
-        { nombre: 'Juan', apellido: 'perez', key: 'item1', estado: 'Pendiente', descripcion: 'Visto por ultima vez por el 8vo anillo zona de la  guradia viste de una cammisa azul y pantalones jean, cualquier informacion...', imagen1: 'https://picsum.photos/200', imagen2: null  }, 
-        { nombre: 'fulanito', apellido: 'de tal', key: 'item2', estado: 'Aceptado', descripcion: 'Visto por ultima vez por el 8vo anillo zona de la  guradia viste de una cammisa azul y pantalones jean, cualquier informacion...', imagen1: 'https://picsum.photos/200', imagen2: 'https://picsum.photos/200' }, 
-        { nombre: 'pepe', apellido: 'de las casas', key: 'item3', estado: 'Rechazado', descripcion: 'Visto por ultima vez por el 8vo anillo zona de la  guradia viste de una cammisa azul y pantalones jean, cualquier informacion...', imagen1: 'https://picsum.photos/200', imagen2: 'https://picsum.photos/200' }
+        { id: 1, nombre: 'Juan', apellido: 'perez', key: 'item1', estado: 'Pendiente', descripcion: 'Visto por ultima vez por el 8vo anillo zona de la  guradia viste de una cammisa azul y pantalones jean, cualquier informacion...', imagen1: 'https://picsum.photos/200', imagen2: null  }, 
+        { id: 2, nombre: 'fulanito', apellido: 'de tal', key: 'item2', estado: 'Aceptado', descripcion: 'Visto por ultima vez por el 8vo anillo zona de la  guradia viste de una cammisa azul y pantalones jean, cualquier informacion...', imagen1: 'https://picsum.photos/200', imagen2: 'https://picsum.photos/200' }, 
+        { id: 3, nombre: 'pepe', apellido: 'de las casas', key: 'item3', estado: 'Rechazado', descripcion: 'Visto por ultima vez por el 8vo anillo zona de la  guradia viste de una cammisa azul y pantalones jean, cualquier informacion...', imagen1: 'https://picsum.photos/200', imagen2: 'https://picsum.photos/200' }
     ];
-    const navigation = useNavigation();
+    const screen_complaint = (item_id) =>{
+        complaint_id(item_id);
+    }
     const renderItem = ({ item }) => {
-
         
         const select_color_estado = (estado) =>{
             if(estado === 'Pendiente' ){
@@ -26,7 +26,7 @@ const ViewMissingPersonsRecords = () => {
             <View style={[styles.container, {padding: 10}]}>
                 <TouchableHighlight
                     key={item.key}
-                    onPress={() => navigation.navigate("RegisterComplaint", { form_view: true })}
+                    onPress={() => {screen_complaint(item.id)}}
 
                     underlayColor={Colors.RED}
                 >
@@ -124,4 +124,5 @@ const styles = StyleSheet.create({
         borderRadius: 20
     },
 });
+
 export default ViewMissingPersonsRecords
