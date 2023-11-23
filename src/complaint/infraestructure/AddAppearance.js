@@ -1,4 +1,4 @@
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, ToastAndroid } from 'react-native'
 import React from 'react'
 import { ScrollView } from 'react-native'
 import InputText from './InputText'
@@ -24,15 +24,22 @@ const AddAppearance = ({register_Data, button_next}) => {
     const [options_colors, set_options_colors] = useState([]);
 
     useEffect(() => {
-        chargueColors();
+        chargueColors(0);
     },[]);
 
-    const chargueColors = async () => {
+    const chargueColors = async (time) => {
         try {
           const listOfColors = await getColors();
           set_options_colors([...listOfColors]);
-        } catch(e) {
-          console.log(e)
+        } catch(error) {
+          console.log('Ocurrio un erro al recargar')
+          if (error instanceof Error && error.message.includes('timeout') && time < 3) {
+            setTimeout(() => {
+              chargueColors(time + 1);
+            }, 5000);
+          } else {
+            ToastAndroid.show('Se produjo un error, intentelo mas tarde', ToastAndroid.SHORT);
+          }
         }
     };
 

@@ -54,6 +54,7 @@ export const getHistory = async () => {
         let elementsLabel = []
         listOfHistories.forEach(element => {
             const newElement = {
+                id: element.id,
                 key: `item${element.id}`,
                 nombre: `${element.nombre}`,
                 apellido: `${element.apellidos}`,
@@ -87,12 +88,20 @@ export const getLanguages = async () => {
         console.log(elementsLabel);
         return elementsLabel;
     } catch {
-
+        console.log('Ocurrio un erro al cargar los lenguajes');
     }
-
-
-    
 }
+
+export const getReport = async (denuncia_id) => {
+    const EndPoint = `show-denuncia/${ denuncia_id }`;
+    try {
+        const report = await getDatos(EndPoint);
+        return report;
+    } catch {
+        console.log('Error, no se pudo cargar la informacion de reporte');
+    }
+};
+
 
 export const sendData = async (data) => {
     const endPoint = 'denunciar';

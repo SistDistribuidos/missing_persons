@@ -1,4 +1,4 @@
-import { View, Text, Modal, StyleSheet, TouchableWithoutFeedback, ScrollView, Image, TouchableOpacity } from 'react-native'
+import { View, Text, Modal, StyleSheet, TouchableWithoutFeedback, ScrollView, Image, Pressable, Linking } from 'react-native'
 import React, { useState } from 'react'
 import CarouselImages from './components/CarouselImages';
 import { Divider } from '@rneui/themed';
@@ -104,6 +104,12 @@ const ViewMissingsPersons = ({ modal_visible, close_modal, data_complaint, is_ho
             </Modal>
         )
     }
+    const callNumber = async () => {
+       const numeroTelefono = `${data_complaint.contacto}`;
+       const numeroFormateado = `tel:${numeroTelefono}`;
+       const resultado = await Linking.openURL(numeroFormateado);
+       console.log('Resultado de la apertura de la aplicación de marcación:', resultado);
+    };
 
     return (
         <Modal
@@ -217,7 +223,9 @@ const ViewMissingsPersons = ({ modal_visible, close_modal, data_complaint, is_ho
 
                                     <View style={{margin:8}}>
                                         <Text style={{fontWeight:'bold', fontSize: 20, color: Colors.RED, textAlign: 'center'}}>¿ Me viste ? llama al </Text>
-                                        <Text style={{fontWeight:'400', fontSize: 20, marginLeft: 10, color: Colors.RED, textAlign: 'center'}}>{data_complaint.contacto}</Text>
+                                        <Pressable onPress={callNumber}>
+                                            <Text style={{fontWeight:'400', fontSize: 20, marginLeft: 10, color: 'blue', textAlign: 'center'}}>{data_complaint.contacto}</Text>
+                                        </Pressable>
                                     </View>
                                     {is_home==true?
                                             <TouchableOpacity onPress={()=> {console.log('reportar avistamiento '),setSightingReport(true)}} 

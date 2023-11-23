@@ -1,4 +1,4 @@
-import { View, Text, FlatList, TouchableHighlight, TouchableOpacity, Image, StyleSheet } from 'react-native'
+import { View, Text, FlatList, TouchableHighlight, TouchableOpacity, Image, StyleSheet, ToastAndroid } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Colors from '../domain/Colors'
 import { useNavigation } from '@react-navigation/native';
@@ -22,6 +22,23 @@ const ViewMissingPersonsRecords = ({complaint_id}) => {
             console.log(e);
         })
     },[]);
+
+    const chargeHistory = async (time) => {
+        try {
+            const res = await getHistory();
+            setDataList(res);
+        } catch(error) {
+            if (error instanceof Error && error.message.includes('timeout') && time < 3 ) {
+                setTimeout(() => {
+                    chargeHistory();
+                }, 5000);
+            } else {
+                ToastAndroid.show('Intentelo mas tarde', ToastAndroid.SHORT);
+            }
+        }
+        
+    }
+
     const navigation = useNavigation();
     const renderItem = ({ item }) => {
         

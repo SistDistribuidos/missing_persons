@@ -1,4 +1,4 @@
-import { View, StyleSheet, ScrollView } from 'react-native'
+import { View, StyleSheet, ScrollView, ToastAndroid } from 'react-native'
 import React from 'react'
 import Colors from '../domain/Colors'
 import InputText from './InputText'
@@ -23,24 +23,33 @@ const AddInformation = ({register_Data, button_next}) => {
   useEffect(() => {
     chargueNationalities();
     chargeLanguages();
-    console.log('register value', register_Data);
   },[]);
 
-  const chargueNationalities = async () => {
+  const chargueNationalities = async (time) => {
     try {
       const listOfNationalities = await getNationalities();
       set_options_nationality([...listOfNationalities]);
     } catch(e) {
-      console.log(e)
+      console.log(e);
+      if (e instanceof Error && e.message.includes('timeout') && time < 3) {
+        chargueNationalities(time + 1);
+      } else {
+        ToastAndroid.show('Fallo al obtener los recursos', ToastAndroid.SHORT);
+      }
     }
   };
   
-  const chargeLanguages = async () => {
+  const chargeLanguages = async (time) => {
     try {
       const listOfLanguages = await getLanguages();
       set_options_language([...listOfLanguages]);
     } catch(e) {
-      console.log(e)
+      console.log(e);
+      if (e instanceof Error && e.message.includes('timeout') && time < 3) {
+        chargeLanguages(time + 1);
+      } else {
+        ToastAndroid.show('Fallo al obtener los recursos', ToastAndroid.SHORT);
+      }
     }
   };
 
