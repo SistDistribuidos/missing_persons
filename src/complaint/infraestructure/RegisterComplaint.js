@@ -16,6 +16,7 @@ import AddImagesAndFiles from './AddImagesAndFiles'
 import IncompleteFormModal from '../../application/components/IncompleteFormModal'
 import FormIncomplete from '../application/FormIncomplete'
 import FormFilled from '../../application/components/FormFilled'
+import { sendData } from '../../application/services/ValuesService'
 
 const RegisterComplaint = ({navigation }) => {
   const [viewScreen, setViewScreen] = useState(1)
@@ -57,6 +58,12 @@ const RegisterComplaint = ({navigation }) => {
     }
     if(val== 5 ){
       form_filled.showAgain();
+      sendData(data_complaint_register)
+      .then((response) => {
+        console.log("Respuesta ",response);
+      }).catch((e) => {
+        console.log(e);
+      });
     }
     
   }
@@ -86,7 +93,7 @@ const RegisterComplaint = ({navigation }) => {
       <FormFilled  
         visible={form_filled.visible}
         onClose={form_filled.handleCloseModal}
-        onAccept={()=> {form_filled.handleCloseModal(), goBack()}}
+        onAccept={()=> {form_filled.handleCloseModal()}}
         title='Completado !!!'
         description="Formulario completado con exito !!!"
       />

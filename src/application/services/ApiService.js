@@ -29,7 +29,7 @@ export const enviarDatos = async (endpoint, data) => {
 
 export const enviarDatosMultimedia = async (endpoint, data) => {
     try {
-      const response = await apiService.post('/enviar', data, {
+      const response = await apiService.post(endpoint, data, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

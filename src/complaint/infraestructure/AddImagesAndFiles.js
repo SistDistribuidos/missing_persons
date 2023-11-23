@@ -11,10 +11,14 @@ const AddImagesAndFiles = ({register_Data, button_next}) => {
     const [fotoImage, setFotoImage] = useState(null);
 
     const setImages = (image, type) => {
-        if (type == 'denuncia')
+        if (type == 'denuncia') {
             setDenunciaImage(image);
-        else
+            register_Data.setDocumento_id(image);
+        }
+        else {
             setFotoImage(image);
+            register_Data.setImage(image);
+        }
 
         console.log(register_Data);
     };
@@ -31,7 +35,7 @@ const AddImagesAndFiles = ({register_Data, button_next}) => {
                             <UploadPhoto setImages={setImages} />
                         </View>
                         <View style={{ flex: 1}}>
-                            <RegisterUbication ubication_selected={(val)=> register_Data.setUbicación(val)} />
+                            <RegisterUbication ubication_selected={(val)=> register_Data.setUbicacion(val)} />
                         </View>
                     {/* </FlatList> */}
                     </ScrollView>
