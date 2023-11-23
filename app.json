@@ -5,6 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "scheme": "com.moviltopicos.dilkerproject",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -19,6 +20,8 @@
     },
     "android": {
       "config": {
+        "package": "com.moviltopicos.dilkerproject",
+        "googleServicesFile": "./google-services.json",
         "googleMaps": {
           "apiKey": "AIzaSyDpHCkEHm9CjgMRU5lystBiR8jXxIDNa4s"
         }
@@ -26,10 +29,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.daniel1245.MissingPersonsExpo"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "3ed88d37-6116-4095-87e5-a63f1fd2be6d"
+      }
     }
   }
 }
