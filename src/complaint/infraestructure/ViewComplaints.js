@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text, ToastAndroid } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import ComponentHeader from './components/ComponentHeader'
@@ -8,42 +8,39 @@ import { useNavigation } from '@react-navigation/native';
 import ButtonInformation from './components/ButtonInformation';
 import ViewMissingPersonsRecords from './ViewMissingPersonsRecords';
 import ViewMissingsPersons from './ViewMissingsPersons';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import helper from '../../domain/helper';
+import { getReport } from '../../application/services/ValuesService';
 
 const ViewComplaints = () => {
   const [modal_visible, setModal_visible] = useState(false)
   const navigation = useNavigation();
-  let data = { 
-      id: 1,
-      nombre: 'juan',
-      apellido: 'palito de tal',
-      genero: 1,
-      fecha_nacimiento: '2023-11-21',
-      edad: '13',
-      altura: '1.2',
-      peso: '1.2',
-      cicatriz: 'No tiene',
-      tatuaje: 'No tiene',
-      direccion: 'A la universidad uagrm',
-      color_cabello: 'Negro',
-      color_ojos: 'Negro',
-      fecha_desaparicion: '2023-11-07',
-      hora_desaparicion: '15:20:00',
-      ultima_ropa_puesta: 'No tiene',
-      ubicacion: '1.2',
-      user_id: '1.2',
-      nacionalidad_id: 'Argentino',
-      nacionalidad_code: 'AR',
-      documento_id: '1.2',
-      idioma_id: '1.2',
-      estado: '1.2',
-      contacto: '77598315',
-      enfermedades: 'Sufre del corazon',
-      latitude: -17.776528,
-      longitude: -63.195123,
-      imagen1: helper.IMAGE_RANDOM,
-      imagen2: helper.IMAGE_RANDOM,
+  const [data, setData] = useState({});
+
+    const onPress = async (complaint) => {
+      try {
+        const report = await obtainReport(complaint, 0);
+        setModal_visible(true);
+      } catch (error) {
+        ToastAndroid.show('Ocurrio un error durante la consulta', ToastAndroid.SHORT);
+      }
+    }
+
+    const obtainReport = async(value, time) => {
+      try {
+        const report = await getReport(value);
+        if (report){
+          setData(report.datos);
+        }
+      } catch (error) {
+        if (error instanceof Error && error.message.includes('timeout') && time < 3) {
+          setTimeout(() => {
+            obtainReport(value, time + 1);
+          }, 5000);
+        } else {
+          ToastAndroid.show('No se pudo conectar con el server', ToastAndroid.SHORT);
+        }
+      }
 
     };
 
@@ -55,7 +52,7 @@ const ViewComplaints = () => {
       <View style={{ flex: 1 }}>
         
         <View style={{ flex: 1, margin: 15 }}>
-          <ButtonInformation title="Qhe hacer en estos casos?" clickButtonNext={() => {console.log('funcionaaaaaaaaaaaaaa')}} />
+          <ButtonInformation title="¿Que hacer en estos casos?" clickButtonNext={() => {console.log('funcionaaaaaaaaaaaaaa')}} />
         </View>
 
         <ViewMissingsPersons 
@@ -68,7 +65,7 @@ const ViewComplaints = () => {
 
         <View style={{ flex: 15 }}>
 
-          <ViewMissingPersonsRecords complaint_id={(complaint_id) => setModal_visible(true)}></ViewMissingPersonsRecords>
+          <ViewMissingPersonsRecords complaint_id={onPress}></ViewMissingPersonsRecords>
           <FAB
             visible={true}
             icon={{ name: 'add', color: 'white' }}

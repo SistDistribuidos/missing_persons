@@ -1,4 +1,4 @@
-import { View, Text, Modal, StyleSheet, TouchableWithoutFeedback, ScrollView, Image, Pressable, Linking } from 'react-native'
+import { View, Text, Modal, StyleSheet, TouchableWithoutFeedback, ScrollView, Image, TouchableOpacity, Pressable, Linking } from 'react-native'
 import React, { useState } from 'react'
 import CarouselImages from './components/CarouselImages';
 import { Divider } from '@rneui/themed';

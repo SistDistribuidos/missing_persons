@@ -7,7 +7,7 @@ import { getHistory } from '../../application/services/ValuesService';
 const ViewMissingPersonsRecords = ({complaint_id}) => {
     let data = [
         { id: 1, nombre: 'Juan', apellido: 'perez', key: 'item1', estado: 'Pendiente', descripcion: 'Visto por ultima vez por el 8vo anillo zona de la  guradia viste de una cammisa azul y pantalones jean, cualquier informacion...', imagen1: 'https://picsum.photos/200', imagen2: null  }, 
-        { id: 2, nombre: 'fulanito', apellido: 'de tal', key: 'item2', estado: 'Aceptado', descripcion: 'Visto por ultima vez por el 8vo anillo zona de la  guradia viste de una cammisa azul y pantalones jean, cualquier informacion...', imagen1: 'https://picsum.photos/200', imagen2: 'https://picsum.photos/200' }, 
+        { id: 2, nombre: 'Dilker', apellido: 'el feo', key: 'item2', estado: 'Aceptado', descripcion: 'Visto por ultima vez por el 8vo anillo zona de la  guradia viste de una cammisa azul y pantalones jean, cualquier informacion...', imagen1: 'https://picsum.photos/200', imagen2: 'https://picsum.photos/200' }, 
         { id: 3, nombre: 'pepe', apellido: 'de las casas', key: 'item3', estado: 'Rechazado', descripcion: 'Visto por ultima vez por el 8vo anillo zona de la  guradia viste de una cammisa azul y pantalones jean, cualquier informacion...', imagen1: 'https://picsum.photos/200', imagen2: 'https://picsum.photos/200' }
     ];
     const screen_complaint = (item_id) =>{
@@ -16,11 +16,7 @@ const ViewMissingPersonsRecords = ({complaint_id}) => {
 
     const [dataList, setDataList] = useState([]);
     useEffect(() => {
-        getHistory().then((response) => {
-            setDataList(response);
-        }).catch((e)=> {
-            console.log(e);
-        })
+        chargeHistory(0);
     },[]);
 
     const chargeHistory = async (time) => {

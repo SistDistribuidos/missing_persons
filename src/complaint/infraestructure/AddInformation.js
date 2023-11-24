@@ -32,7 +32,9 @@ const AddInformation = ({register_Data, button_next}) => {
     } catch(e) {
       console.log(e);
       if (e instanceof Error && e.message.includes('timeout') && time < 3) {
-        chargueNationalities(time + 1);
+        setTimeout(() => {
+          chargueNationalities(time + 1);
+        },5000);
       } else {
         ToastAndroid.show('Fallo al obtener los recursos', ToastAndroid.SHORT);
       }
@@ -58,7 +60,7 @@ const AddInformation = ({register_Data, button_next}) => {
         <View style={styles.card}>
             <View style={{flex:10}}>
                 <ScrollView>
-                    <InputText title={'Nombre'} placeHolder={'Dilker Cartagena'} errorMessage='' inputChangeValue={(value)=>register_Data.setNombre(value)} />
+                    <InputText title={'Nombre'} placeHolder={'Nombre y apellido'} errorMessage='' inputChangeValue={(value)=>register_Data.setNombre(value)} />
                     <ModalSelectGenero
                                 title_select='Sexo'
                                 labelSelect={select_genero.selectedOption.label}
