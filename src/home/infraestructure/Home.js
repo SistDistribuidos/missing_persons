@@ -7,41 +7,38 @@ import ComplaintScreen from '../../complaint/infraestructure/ComplaintScreen'
 import Filter from './component/Filter'
 import ViewMissingsPersons from '../../complaint/infraestructure/ViewMissingsPersons'
 import helper from '../../domain/helper'
+import { getReport } from '../../application/services/ValuesService'
 
 const Home = () => {
 
   const [modal_visible, setModal_visible] = useState(false)
 
-  let data = { 
-    id: 1,
-    nombre: 'juan',
-    apellido: 'palito de tal',
-    genero: 1,
-    fecha_nacimiento: '2023-11-21',
-    edad: '13',
-    altura: '1.2',
-    peso: '1.2',
-    cicatriz: 'No tiene',
-    tatuaje: 'No tiene',
-    direccion: 'A la universidad uagrm',
-    color_cabello: 'Negro',
-    color_ojos: 'Negro',
-    fecha_desaparicion: '2023-11-07',
-    hora_desaparicion: '15:20:00',
-    ultima_ropa_puesta: 'No tiene',
-    ubicacion: '1.2',
-    user_id: '1.2',
-    nacionalidad_id: 'Argentino',
-    nacionalidad_code: 'AR',
-    documento_id: '1.2',
-    idioma_id: '1.2',
-    estado: '1.2',
-    contacto: '77598315',
-    enfermedades: 'Sufre del corazon',
-    latitude: -17.776528,
-    longitude: -63.195123,
-    imagen1: helper.IMAGE_RANDOM,
-    imagen2: helper.IMAGE_RANDOM,
+  const [data, setData] = useState({});
+
+  const onPress = async (complaint) => {
+    try {
+      const report = await obtainReport(complaint, 0);
+      setModal_visible(true);
+    } catch (error) {
+      ToastAndroid.show('Ocurrio un error durante la consulta', ToastAndroid.SHORT);
+    }
+  }
+
+  const obtainReport = async(value, time) => {
+    try {
+      const report = await getReport(value);
+      if (report){
+        setData(report.datos);
+      }
+    } catch (error) {
+      if (error instanceof Error && error.message.includes('timeout') && time < 3) {
+        setTimeout(() => {
+          obtainReport(value, time + 1);
+        }, 5000);
+      } else {
+        ToastAndroid.show('No se pudo conectar con el server', ToastAndroid.SHORT);
+      }
+    }
 
   };
 
@@ -58,7 +55,7 @@ const Home = () => {
         >
         </ViewMissingsPersons>
 
-      <ComplaintScreen  complaint_id={(complaint_id) => setModal_visible(true)} />
+      <ComplaintScreen  complaint_id={onPress} />
     </SafeAreaView>
   )
 }

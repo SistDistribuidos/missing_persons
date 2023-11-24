@@ -29,11 +29,14 @@ export const searchPeople = async (photo) => {
         uri: photo,
         name: 'image1.jpg',
         type: 'image/jpeg',
-    } );
+    },'foto','file');
+    
+    console.log(formData, photo, 'goood');
     try {
         const response = await enviarDatosMultimedia(EndPoint, formData);
         console.log(response);
     } catch (error) {
+
         throw error;
     }
 };
@@ -70,6 +73,7 @@ export const getHistory = async () => {
         let elementsLabel = []
         listOfHistories.forEach(element => {
             const newElement = {
+                id: element.id,
                 key: `item${element.id}`,
                 nombre: `${element.nombre}`,
                 apellido: `${element.apellidos}`,
@@ -103,12 +107,47 @@ export const getLanguages = async () => {
         console.log(elementsLabel);
         return elementsLabel;
     } catch {
-
+        console.log('Ocurrio un erro al cargar los lenguajes');
     }
-
-
-    
 }
+
+export const getReport = async (denuncia_id) => {
+    const EndPoint = `mostrar-denuncia/${ denuncia_id }`;
+    try {
+        const report = await getDatos(EndPoint);
+        return report;
+    } catch (error) {
+        console.log('Error, no se pudo cargar la informacion de reporte ',error);
+    }
+};
+
+export const getReportsAcepted = async () => {
+    const EndPoint = `denuncias-aceptadas`;
+    try {
+        const reports = await getDatos(EndPoint);
+        const listOfReports = reports.datos;
+        let elementsLabel = []
+        listOfReports.forEach(element => {
+            const newElement = {
+                id: element.id,
+                nombre: element.nombre,
+                apellido: element.apellidos,
+                key: `item${element.id}`,
+                estado: element.estado,
+                imagen1: element.documento_id,
+                imagen2: element.imagen1,
+                descripcion: `Fue visto por ultima ves en ${element.direccion} el dia ${element.fecha_desaparicion} a horas ${element.hora_desaparicion}, con ${element.ultima_ropa_puesta}`,
+            };
+
+            elementsLabel.push(newElement);
+        });
+        console.log(elementsLabel);
+        return elementsLabel;
+        return reports;
+    } catch (error) {
+        console.log('Ocurrio un error durante la consulta ', error);
+    }
+};
 
 export const sendData = async (data) => {
     const endPoint = 'denunciar';
@@ -154,7 +193,36 @@ export const sendData = async (data) => {
     } catch {
 
     }
+}
 
+export const sendAvistament = async (data) => {
+    const endPoint = 'registrar-avistamiento';
+    try {
+        const formData = new FormData();
 
-    
+        if (data.denunciaImage)
+        formData.append("imagenes[]",{
+            uri: data.denunciaImage,
+            type: 'image/jpeg',
+            name: 'image1.jpeg'
+        });
+        if (data.fotoImage)
+        formData.append('imagenes[]', {
+            uri: data.fotoImage,
+            type: 'image/jpeg',
+            name: 'image2.jpeg'
+        });
+
+        formData.append('descripcion', data.descripcion);
+        formData.append('fecha', data.fecha);
+        formData.append('hora', data.hora);
+        formData.append('denuncia_id', data.denuncia_id);
+        formData.append('contacto', data.contacto);
+        formData.append('ubicacion', JSON.stringify(data.ubication));
+
+        const response = await enviarDatosMultimedia(endPoint, formData);
+        return response;
+    } catch (error) {
+        console.log('Fallo al cargar ',error);
+    }
 }

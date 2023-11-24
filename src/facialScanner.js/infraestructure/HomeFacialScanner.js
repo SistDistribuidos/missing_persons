@@ -6,19 +6,25 @@ import { Icon } from '@rneui/themed'
 import { Image } from 'react-native';
 import Colors from '../../complaint/domain/Colors'
 import { searchPeople } from '../../application/services/ValuesService'
+import * as Animatable from 'react-native-animatable';
 
 const HomeFacialScanner = () => {
     const [useCamera, setUseCamera] = useState(false)
     const [photo, setPhoto] = useState(null)
+    const [reportado, setReportado] = useState(false)
+
 
     const recivePhoto = (photographie) => {
         setPhoto(photographie);
         setUseCamera(false);
         console.log('la foto', photo);
     }
-    const escanearFoto =()=>{
+    const escanearFoto = () => {
+        setReportado(true);
+
         searchPeople(photo).then((res) => {
             console.log('Todo Ok');
+            setReportado(true);
         }).catch((error) => {
             console.log(error)
         });
@@ -71,7 +77,7 @@ const HomeFacialScanner = () => {
                                         size={35} // Tamaño del icono
                                         color={Colors.GREEN}
                                         containerStyle={{ position: 'absolute', bottom: 30, right: 10 }}
-                                        onPress={() => setPhoto(null)}
+                                        onPress={() => {setPhoto(null), setReportado(false)}}
                                     />
                                 </View>
                             </View>
@@ -85,20 +91,24 @@ const HomeFacialScanner = () => {
                 </View>
             }
             <View style={{ flex: 2 }}>
-                <View style={{ flex: 0.1, backgroundColor:'white' }}>
+                <View style={{ flex: 0.1, backgroundColor: 'white' }}>
                     <TouchableOpacity style={{ justifyContent: 'center', alignContent: 'center', alignItems: 'center', backgroundColor: Colors.RED, marginHorizontal: 80, padding: 10, borderRadius: 22 }} onPress={escanearFoto}>
-                        <Text style={{color: Colors.WHITE, fontSize: 18, fontWeight: 'bold' }}>Escanear fotos</Text>
+                        <Text style={{ color: Colors.WHITE, fontSize: 18, fontWeight: 'bold' }}>Escanear fotos</Text>
                     </TouchableOpacity>
                 </View>
 
-                <View style={{flex:1, justifyContent:'center', alignItems:'center', backgroundColor:'white'}}>
-                    <Text style={{color: Colors.RED, textAlign: 'center', fontSize:30, fontWeight: 'bold'}}> Alerta Persona reportada como desaparecida !!!</Text>
-                    <Image
-                                        source={{ uri: "https://res.cloudinary.com/de9nzcfsz/image/upload/v1700797533/uh8xxzozpk82ziiw3wvj.png" }}
-                                        style={styles.image_styles}
-                                    />
-                </View>
-
+                {reportado==true ?
+                    <Animatable.View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'white' }} 
+                    animation={'bounceInUp'} duration={1500} >
+                        <Text style={{ color: Colors.RED, textAlign: 'center', fontSize: 30, fontWeight: 'bold' }}> Alerta Persona reportada como desaparecida !!!</Text>
+                        <Image
+                            source={{ uri: "https://res.cloudinary.com/de9nzcfsz/image/upload/v1700797533/uh8xxzozpk82ziiw3wvj.png" }}
+                            style={styles.image_styles}
+                        />
+                    </Animatable.View>
+                    :
+                    <Text></Text>
+                }
             </View>
         </SafeAreaView>
     )

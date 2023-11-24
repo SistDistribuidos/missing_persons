@@ -1,4 +1,4 @@
-import { View, Text, ActivityIndicator, FlatList, TouchableOpacity, StyleSheet, ImageBackground, TextInput } from 'react-native'
+import { View, Text, ActivityIndicator, FlatList, TouchableOpacity, StyleSheet, ImageBackground, TextInput, ToastAndroid } from 'react-native'
 import React, { useState } from 'react'
 import { Image } from '@rneui/themed';
 import helper from '../../../domain/helper';
@@ -10,9 +10,12 @@ import RegisterUbication from '../RegisterUbication';
 import Colors from '../../domain/Colors';
 import DateTimeComponent from './DateTimeComponent';
 import InputNumber from '../InputNumber';
+import { sendAvistament } from '../../../application/services/ValuesService';
+import { useNavigation } from '@react-navigation/native';
 
 const ReportSighting = ({ images, height, width, visible, notVisible, complaint_id }) => {
-
+    
+    const navigation = useNavigation();
     const [denunciaImage, setDenunciaImage] = useState(null);
     const [fotoImage, setFotoImage] = useState(null);
     const [ubication, setUbication] = useState('');
@@ -27,14 +30,26 @@ const ReportSighting = ({ images, height, width, visible, notVisible, complaint_
         }
         else {
             setFotoImage(image);
+            console.log(image)
         }
     };
     const saveReportSighting = () => {
-        console.log('ingresaaaa');
         let denuncia_id = complaint_id;
-        // aca haga su consulta a la api
-        console.log(denuncia_id, denunciaImage, fotoImage, ubication, descripcion, fecha, hora, contacto);
-        //
+        const data = {denuncia_id, denunciaImage, fotoImage, ubication, descripcion, fecha, hora, contacto};
+        if (!(denuncia_id && ubication && descripcion && fecha && hora && contacto)){
+            ToastAndroid.show('Llene los campos primero', ToastAndroid.SHORT);
+            return;
+        }
+        console.log(data)
+        sendAvistament(data).then((response) => {
+            if (!response) {
+                ToastAndroid.show('Hubo un problema con el reporte, intente mas tarde', ToastAndroid.SHORT);
+            } else {
+                navigation.navigate('Complaints');
+            }
+        }).catch((error) => {
+            console.log('Ocurrio un error durante el envio de formulario', error )
+        });
     }
 
    

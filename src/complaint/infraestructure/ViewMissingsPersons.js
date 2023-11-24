@@ -1,4 +1,4 @@
-import { View, Text, Modal, StyleSheet, TouchableWithoutFeedback, ScrollView, Image, TouchableOpacity } from 'react-native'
+import { View, Text, Modal, StyleSheet, TouchableWithoutFeedback, ScrollView, Image, TouchableOpacity, Pressable, Linking } from 'react-native'
 import React, { useState } from 'react'
 import CarouselImages from './components/CarouselImages';
 import { Divider } from '@rneui/themed';
@@ -86,7 +86,7 @@ const ViewMissingsPersons = ({ modal_visible, close_modal, data_complaint, is_ho
                 onRequestClose={() => setViewGallery(false)}
             >
                 <View style={styles.modalContainer}>
-                    <CarouselImagesGallery images={[data_complaint.imagen1, data_complaint.imagen1]} height={height} width={width} />
+                    <CarouselImagesGallery images={[data_complaint.imagen1, data_complaint.imagen2]} height={height} width={width} />
                 </View>
             </Modal>
         )
@@ -115,11 +115,17 @@ const ViewMissingsPersons = ({ modal_visible, close_modal, data_complaint, is_ho
                 onRequestClose={() => setSightingReport(false)}
             >
                 <View style={styles.modalContainer}>
-                    <ReportSighting images={[data_complaint.imagen1, data_complaint.imagen1]} height={height} width={width} complaint_id={data_complaint.id} />
+                    <ReportSighting images={[data_complaint.imagen1, data_complaint.imagen2]} height={height} width={width} complaint_id={data_complaint.id} />
                 </View>
             </Modal>
         )
     }
+    const callNumber = async () => {
+       const numeroTelefono = `${data_complaint.contacto}`;
+       const numeroFormateado = `tel:${numeroTelefono}`;
+       const resultado = await Linking.openURL(numeroFormateado);
+       console.log('Resultado de la apertura de la aplicación de marcación:', resultado);
+    };
 
     return (
         <Modal
@@ -144,8 +150,8 @@ const ViewMissingsPersons = ({ modal_visible, close_modal, data_complaint, is_ho
                                 </View>
                                 <View style={{ flex: 5, marginVertical: 5 }}>
 
-                                    <CarouselImages
-                                        images={[data_complaint.imagen1, data_complaint.imagen1]}
+                                    <CarouselImages 
+                                        images={[data_complaint.imagen1, data_complaint.imagen2]}
                                         height={200}
                                         width={300}
                                         select_photo={() => setViewGallery(true)}
@@ -231,16 +237,18 @@ const ViewMissingsPersons = ({ modal_visible, close_modal, data_complaint, is_ho
                                         />
                                     </View>
 
-                                    <View style={{ margin: 8 }}>
-                                        <Text style={{ fontWeight: 'bold', fontSize: 20, color: Colors.RED, textAlign: 'center' }}>¿ Me viste ? llama al </Text>
-                                        <Text style={{ fontWeight: '400', fontSize: 20, marginLeft: 10, color: Colors.RED, textAlign: 'center' }}>{data_complaint.contacto}</Text>
+                                    <View style={{margin:8}}>
+                                        <Text style={{fontWeight:'bold', fontSize: 20, color: Colors.RED, textAlign: 'center'}}>¿ Me viste ? llama al </Text>
+                                        <Pressable onPress={callNumber}>
+                                            <Text style={{fontWeight:'400', fontSize: 20, marginLeft: 10, color: 'blue', textAlign: 'center'}}>{data_complaint.contacto}</Text>
+                                        </Pressable>
                                     </View>
-                                    {is_home == true ?
-                                        <TouchableOpacity onPress={() => { console.log('reportar avistamiento '), setSightingReport(true) }}
-                                            style={{ padding: 10, backgroundColor: Colors.RED, borderRadius: 16 }}
-                                        >
-                                            <Text style={{ textAlign: 'center', color: Colors.WHITE, fontSize: 18, fontWeight: '700' }} >Reporta mi avistamiento</Text>
-                                        </TouchableOpacity>
+                                    {is_home==true?
+                                            <TouchableOpacity onPress={()=> {console.log('reportar avistamiento '),setSightingReport(true)}} 
+                                                            style={{padding: 10, backgroundColor: Colors.RED, borderRadius: 16}}
+                                            >
+                                                        <Text style={{textAlign: 'center', color: Colors.WHITE, fontSize: 18, fontWeight: '700'}} >Reportar avistamiento</Text>
+                                            </TouchableOpacity>
                                         :
                                         <TouchableOpacity onPress={() => { console.log('reportar avistamiento '), setSeeSightings(true)}}
                                             style={{ padding: 10, backgroundColor: Colors.RED, borderRadius: 16 }}
