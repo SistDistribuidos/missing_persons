@@ -10,6 +10,8 @@ import Colors from '../complaint/domain/Colors';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MenuComplaintScreen from '../complaint/infraestructure/MenuComplaintScreen';
 import RegisterComplaint from '../complaint/infraestructure/RegisterComplaint';
+import FacialScannerHome from '../facialScanner.js/infraestructure/FacialScannerHome';
+import HomeFacialScanner from '../facialScanner.js/infraestructure/HomeFacialScanner';
 
 const HomeStackNavigator = createNativeStackNavigator();
 function MyStack(){
@@ -40,7 +42,33 @@ function MyStack(){
     )
 }
 
-
+function MyScanner(){
+    return (
+        <HomeStackNavigator.Navigator>
+            <HomeStackNavigator.Screen 
+                name="HomeFacialScanner"
+                component={HomeFacialScanner}
+                options={{
+                    headerShown: false
+                }} 
+            />
+            {/* <HomeStackNavigator.Screen 
+                name="MenuComplaintScreens"
+                component={MenuComplaintScreen}
+                options={{
+                    headerShown: false
+                }} 
+            />
+            <HomeStackNavigator.Screen 
+                name="RegisterComplaint"
+                component={RegisterComplaint}
+                options={{
+                    headerShown: false
+                }} 
+            /> */}
+        </HomeStackNavigator.Navigator>
+    )
+}
 const Tab = createBottomTabNavigator();
 function MyTabs() {
     return (
@@ -59,6 +87,16 @@ function MyTabs() {
                     headerShown: false,
                     tabBarBadge: 10
                 }}    
+            />
+            <Tab.Screen name="FacialScanners" component={MyScanner}
+                options={{
+                    tabBarLabel: 'Escanner',
+                    tabBarIcon: ({ color, size})=>(
+                        <MaterialCommunityIcons name="volume-vibrate" size={30} color={color} />
+                    ),
+                    headerShown: false
+                }}    
+            
             />
             <Tab.Screen name="Complaints" component={MyStack}
                 options={{

@@ -36,6 +36,8 @@ const ReportSighting = ({ images, height, width, visible, notVisible, complaint_
         console.log(denuncia_id, denunciaImage, fotoImage, ubication, descripcion, fecha, hora, contacto);
         //
     }
+
+   
     return (
 
         <ScrollView >

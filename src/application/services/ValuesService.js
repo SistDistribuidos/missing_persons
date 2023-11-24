@@ -22,6 +22,22 @@ export const getNationalities = async () => {
     
 }
 
+export const searchPeople = async (photo) => {
+    const EndPoint = 'escaner';
+    let formData = new FormData();
+    formData.append('foto',{
+        uri: photo,
+        name: 'image1.jpg',
+        type: 'image/jpeg',
+    } );
+    try {
+        const response = await enviarDatosMultimedia(EndPoint, formData);
+        console.log(response);
+    } catch (error) {
+        throw error;
+    }
+};
+
 export const getColors = async () => {
     const EndPoint = 'getColores';
     try {

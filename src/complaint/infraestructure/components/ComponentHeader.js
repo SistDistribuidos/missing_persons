@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Icon } from '@rneui/themed';
 import { StatusBar } from 'expo-status-bar';
 import Colors from '../../domain/Colors';
+import * as Animatable from "react-native-animatable";
 
 const ComponentHeader = ({name_app}) => {
   return (
@@ -13,9 +14,9 @@ const ComponentHeader = ({name_app}) => {
 
         </View>
 
-        <View style={{flex: 2.5, justifyContent: 'center', alignItems: 'center'}}>
+        <Animatable.View style={{flex: 2.5, justifyContent: 'center', alignItems: 'center'}} animation="pulse" easing="ease-out" iterationCount="infinite">
             <Text style={{color: 'white', fontSize: 22, fontWeight: 'bold'}}>{name_app}</Text>
-        </View>
+        </Animatable.View>
 
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', alignContent: 'center'}}>
             <Ionicons name="md-notifications" size={25} color="white" onPress={() => console.log('hello')}/>

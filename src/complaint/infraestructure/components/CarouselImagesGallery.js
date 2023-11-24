@@ -5,7 +5,6 @@ import helper from '../../../domain/helper';
 import { StatusBar } from 'expo-status-bar';
 
 const CarouselImagesGallery = ({ images, height, width, visible, notVisible }) => {
-
     return (
             <View style={{ flex: 1 }}>
                 <StatusBar hidden/>

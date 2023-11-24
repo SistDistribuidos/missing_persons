@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Colors from '../domain/Colors'
 import { useNavigation } from '@react-navigation/native';
 import { getHistory } from '../../application/services/ValuesService';
+import LoadingDialog from '../../domain/img_animated/LoadingDialog';
 
 const ViewMissingPersonsRecords = ({complaint_id}) => {
     let data = [
@@ -17,11 +18,23 @@ const ViewMissingPersonsRecords = ({complaint_id}) => {
     const [dataList, setDataList] = useState([]);
     useEffect(() => {
         getHistory().then((response) => {
-            setDataList(response);
+            console.log('ingresa bien', response);
+            setDataList(response==undefined? data : response);
         }).catch((e)=> {
-            console.log(e);
+            // console.log('ingresa al error');
+            console.log(e, dataList);
         })
     },[]);
+
+    // const [isVisibleLoading, setIsVisibleLoading] = useState(dataList.length==0? true : false)
+    // if(dataList.length == 0){
+    //     return(
+    //     <View>
+    //         <LoadingDialog  visible={isVisibleLoading} ></LoadingDialog>
+    //     </View>
+    //     )
+    // }
+
     const navigation = useNavigation();
     const renderItem = ({ item }) => {
         
