@@ -84,7 +84,7 @@ const ViewMissingsPersons = ({ modal_visible, close_modal, data_complaint, is_ho
                 onRequestClose={()=>setViewGallery(false)}
             >
                 <View style={styles.modalContainer}>
-                    <CarouselImagesGallery images={[data_complaint.imagen1, data_complaint.imagen1]} height={height} width={width} />
+                    <CarouselImagesGallery images={[data_complaint.imagen1, data_complaint.imagen2]} height={height} width={width} />
                 </View>
             </Modal>
         )
@@ -99,7 +99,7 @@ const ViewMissingsPersons = ({ modal_visible, close_modal, data_complaint, is_ho
                 onRequestClose={()=>setSightingReport(false)}
             >
                 <View style={styles.modalContainer}>
-                    <ReportSighting images={[data_complaint.imagen1, data_complaint.imagen1]} height={height} width={width} complaint_id={data_complaint.id} />
+                    <ReportSighting images={[data_complaint.imagen1, data_complaint.imagen2]} height={height} width={width} complaint_id={data_complaint.id} />
                 </View>
             </Modal>
         )
@@ -135,7 +135,7 @@ const ViewMissingsPersons = ({ modal_visible, close_modal, data_complaint, is_ho
                                 <View style={{ flex: 5, marginVertical: 5}}>
 
                                     <CarouselImages 
-                                        images={[data_complaint.imagen1, data_complaint.imagen1]}
+                                        images={[data_complaint.imagen1, data_complaint.imagen2]}
                                         height={200}
                                         width={300}
                                         select_photo={()=>setViewGallery(true)}
@@ -231,7 +231,7 @@ const ViewMissingsPersons = ({ modal_visible, close_modal, data_complaint, is_ho
                                             <TouchableOpacity onPress={()=> {console.log('reportar avistamiento '),setSightingReport(true)}} 
                                                             style={{padding: 10, backgroundColor: Colors.RED, borderRadius: 16}}
                                             >
-                                                        <Text style={{textAlign: 'center', color: Colors.WHITE, fontSize: 18, fontWeight: '700'}} >Reporta mi avistamiento</Text>
+                                                        <Text style={{textAlign: 'center', color: Colors.WHITE, fontSize: 18, fontWeight: '700'}} >Reportar avistamiento</Text>
                                             </TouchableOpacity>
                                         :
                                             <></>

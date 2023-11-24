@@ -30,6 +30,7 @@ const ViewComplaints = () => {
       try {
         const report = await getReport(value);
         if (report){
+          report.datos.imagen2 = report.datos.documento_id;
           setData(report.datos);
         }
       } catch (error) {

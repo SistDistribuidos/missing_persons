@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const apiService = axios.create({
-  baseURL: 'http://192.168.147.14/api/', 
+  baseURL: 'http://10.29.8.219/api/', 
 });
 
 export const getDatos = async (endpoint) => {

@@ -174,7 +174,36 @@ export const sendData = async (data) => {
     } catch {
 
     }
+}
 
+export const sendAvistament = async (data) => {
+    const endPoint = 'registrar-avistamiento';
+    try {
+        const formData = new FormData();
 
-    
+        if (data.denunciaImage)
+        formData.append("imagenes[]",{
+            uri: data.denunciaImage,
+            type: 'image/jpeg',
+            name: 'image1.jpeg'
+        });
+        if (data.fotoImage)
+        formData.append('imagenes[]', {
+            uri: data.fotoImage,
+            type: 'image/jpeg',
+            name: 'image2.jpeg'
+        });
+
+        formData.append('descripcion', data.descripcion);
+        formData.append('fecha', data.fecha);
+        formData.append('hora', data.hora);
+        formData.append('denuncia_id', data.denuncia_id);
+        formData.append('contacto', data.contacto);
+        formData.append('ubicacion', JSON.stringify(data.ubication));
+
+        const response = await enviarDatosMultimedia(endPoint, formData);
+        return response;
+    } catch (error) {
+        console.log('Fallo al cargar ',error);
+    }
 }
