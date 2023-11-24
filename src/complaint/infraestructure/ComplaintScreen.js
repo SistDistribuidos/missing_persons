@@ -1,13 +1,26 @@
 import { View, Text, FlatList, StyleSheet, TouchableHighlight, TouchableOpacity, Image } from 'react-native'
-import React from 'react'
+import React,{ useEffect, useState } from 'react'
 import Colors from '../domain/Colors';
+import { getReportsAcepted } from '../../application/services/ValuesService';
 
 const ComplaintScreen = ({complaint_id}) => {
-    let data = [
-        { id: 1, nombre: 'Juan', apellido: 'perez', key: 'item1', estado: 'Pendiente', descripcion: 'Visto por ultima vez por el 8vo anillo zona de la  guradia viste de una cammisa azul y pantalones jean, cualquier informacion...', imagen1: 'https://picsum.photos/200', imagen2: null },
-        { id: 2, nombre: 'fulanito', apellido: 'de tal', key: 'item2', estado: 'Aceptado', descripcion: 'Visto por ultima vez por el 8vo anillo zona de la  guradia viste de una cammisa azul y pantalones jean, cualquier informacion...', imagen1: 'https://picsum.photos/200', imagen2: 'https://picsum.photos/200' },
-        { id: 3, nombre: 'pepe', apellido: 'de las casas', key: 'item3', estado: 'Rechazado', descripcion: 'Visto por ultima vez por el 8vo anillo zona de la  guradia viste de una cammisa azul y pantalones jean, cualquier informacion...', imagen1: 'https://picsum.photos/200', imagen2: 'https://picsum.photos/200' }
-    ];
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        listReports();
+    }, []);
+
+    const listReports = async () => {
+        try {
+            const reports = await getReportsAcepted();
+            if (reports) {
+                setData(reports)
+            }
+            console.log(reports);
+        } catch (error) {
+            console.log('ha ')
+        }
+    }
 
     const screen_complaint = (val) =>{
         complaint_id(val);
