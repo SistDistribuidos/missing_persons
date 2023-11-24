@@ -13,7 +13,7 @@ const RegisterUbication = ({ ubication_selected, exist_ubication }) => {
     console.log('ubication ==>', val, val.latitude, val.longitude);
     setLatitude(val.latitude);
     setLongitude(val.longitude);
-    ubication_selected();
+    ubication_selected(val);
   }
   return (
     <View style={{ flex: 1 }}>

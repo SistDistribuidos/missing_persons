@@ -8,27 +8,33 @@ import { Button } from 'react-native';
 import { ScrollView } from 'react-native';
 import RegisterUbication from '../RegisterUbication';
 import Colors from '../../domain/Colors';
+import DateTimeComponent from './DateTimeComponent';
+import InputNumber from '../InputNumber';
 
-const ReportSighting = ({ images, height, width, visible, notVisible }) => {
+const ReportSighting = ({ images, height, width, visible, notVisible, complaint_id }) => {
 
     const [denunciaImage, setDenunciaImage] = useState(null);
     const [fotoImage, setFotoImage] = useState(null);
     const [ubication, setUbication] = useState('');
     const [descripcion, setDescripcion] = useState('');
+    const [fecha, setFecha] = useState('');
+    const [hora, setHora] = useState('');
+    const [contacto, setContacto] = useState('');
 
     const setImages = (image, type) => {
         if (type == 'denuncia') {
             setDenunciaImage(image);
-            // register_Data.setDocumento_id(image);
         }
         else {
             setFotoImage(image);
-            // register_Data.setImage(image);
         }
     };
-    const saveReportSighting=()=>{
+    const saveReportSighting = () => {
         console.log('ingresaaaa');
-        
+        let denuncia_id = complaint_id;
+        // aca haga su consulta a la api
+        console.log(denuncia_id, denunciaImage, fotoImage, ubication, descripcion, fecha, hora, contacto);
+        //
     }
     return (
 
@@ -59,16 +65,22 @@ const ReportSighting = ({ images, height, width, visible, notVisible }) => {
                         {/* <Button title="Enviar" onPress={() => console.log(inputValue)} /> */}
                     </View>
                 </View>
+                
+                <Text style={{marginHorizontal: 20, fontSize: 15, fontWeight: 'bold', textAlign:'center'}}>Hora y fecha del avistamiento</Text>
+                <View style={{flex: 2 }}>
+                    <DateTimeComponent separeAtribbute={true} onDateChange={(date, hour) => { setFecha(date), setHora(hour) }} />
+                </View>
+
+                <InputNumber title={'Numero de celular'} placeHolder={'700000XX'} errorMessage='' inputChangeValue={(value)=> setContacto(value)}/>
                 <View style={{ flex: 1, marginVertical: 20, flexDirection: 'row' }}>
                     <View style={{ flex: 1 }}>
-                        <RegisterUbication ubication_selected={(val) => setUbication(val)} exist_ubication={ubication!= ''? true: false} />
+                        <RegisterUbication ubication_selected={(val) => {setUbication(val), console.log('ingresa', val);}} exist_ubication={ubication != '' ? true : false} />
                     </View>
                 </View>
 
-
                 <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1, padding: 10 }}>
-                    <TouchableOpacity style={{ backgroundColor: Colors.RED, padding: 15, borderRadius: 15, elevation: 55 }} onPress={saveReportSighting}>
-                        <Text style={{ color: Colors.WHITE, fontSize: 20, fontWeight: 'bold' }}>Reportar avistamiento</Text>
+                    <TouchableOpacity style={{ backgroundColor: Colors.RED, padding: 10, borderRadius: 15, elevation: 55, paddingHorizontal: 55 }} onPress={saveReportSighting}>
+                        <Text style={{ color: Colors.WHITE, fontSize: 22, fontWeight: 'bold' }}>Reportar</Text>
                     </TouchableOpacity>
                 </View>
             </View>

@@ -99,7 +99,7 @@ const ViewMissingsPersons = ({ modal_visible, close_modal, data_complaint, is_ho
                 onRequestClose={()=>setSightingReport(false)}
             >
                 <View style={styles.modalContainer}>
-                    <ReportSighting images={[data_complaint.imagen1, data_complaint.imagen1]} height={height} width={width} />
+                    <ReportSighting images={[data_complaint.imagen1, data_complaint.imagen1]} height={height} width={width} complaint_id={data_complaint.id} />
                 </View>
             </Modal>
         )
@@ -223,7 +223,7 @@ const ViewMissingsPersons = ({ modal_visible, close_modal, data_complaint, is_ho
                                             <TouchableOpacity onPress={()=> {console.log('reportar avistamiento '),setSightingReport(true)}} 
                                                             style={{padding: 10, backgroundColor: Colors.RED, borderRadius: 16}}
                                             >
-                                                        <Text style={{textAlign: 'center', color: Colors.WHITE, fontSize: 18, fontWeight: '700'}} >Reportar avistamiento</Text>
+                                                        <Text style={{textAlign: 'center', color: Colors.WHITE, fontSize: 18, fontWeight: '700'}} >Reporta mi avistamiento</Text>
                                             </TouchableOpacity>
                                         :
                                             <></>
