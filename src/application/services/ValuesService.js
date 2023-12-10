@@ -1,4 +1,6 @@
-import { getDatos, enviarDatosMultimedia } from './ApiService';
+import { getDatos, enviarDatosMultimedia, enviarDatos, enviarDatosWithToken } from './ApiService';
+
+
 
 export const getNationalities = async () => {
     const EndPoint = 'getNacionalidades';
@@ -224,5 +226,26 @@ export const sendAvistament = async (data) => {
         return response;
     } catch (error) {
         console.log('Fallo al cargar ',error);
+    }
+}
+
+export const login = async (data) => {
+    const endPoint = 'login';
+    try {
+        const response = await enviarDatos(endPoint, data);
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const logout = async (token) => {
+    const endPoint = 'logout';
+    console.log('ingresa a cerrar sesion ', token);
+    try {
+        const response = await enviarDatosWithToken(endPoint, {}, token);
+        return response;
+    } catch (error) {
+        return error.response.data;
     }
 }

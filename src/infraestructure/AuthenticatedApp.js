@@ -5,7 +5,6 @@ import Navigation from '../application/Navigation'
 const AuthenticatedApp = () => {
   return (
     <View  style={{flex:1}}>
-        
         <Navigation />
     </View>
   )

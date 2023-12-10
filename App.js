@@ -8,6 +8,8 @@ import Colors from './src/complaint/domain/Colors';
 import AuthNavigator from './src/infraestructure/AuthNavigator';
 import getNotifications from './ExpoNotifications';
 import * as Notifications from "expo-notifications"
+import { Provider } from 'react-redux';
+import Store from './src/loggin/redux/Store';
 
 export default function App() {
 
@@ -42,7 +44,9 @@ export default function App() {
       {/* <StatusBar style="auto" /> */}
       <StatusBar style="light" backgroundColor={Colors.RED} />
       {/* <ViewComplaints /> */}
-      <AuthNavigator />
+      <Provider store={Store}>
+        <AuthNavigator />
+      </Provider>
     </View>
   );
 }

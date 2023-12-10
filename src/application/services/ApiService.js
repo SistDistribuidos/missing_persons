@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const apiService = axios.create({
-  baseURL: 'http://192.168.147.14/api/', 
+  baseURL: 'http://192.168.0.104/PersonasDesaparecidas/public/api/', 
 });
 
 export const getDatos = async (endpoint) => {
@@ -32,6 +32,21 @@ export const enviarDatosMultimedia = async (endpoint, data) => {
       const response = await apiService.post(endpoint, data, {
         headers: {
           'Content-Type': 'multipart/form-data',
+        },
+      });
+  
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  export const enviarDatosWithToken = async (endpoint, data, token) => {
+    try {
+      const response = await apiService.post(`${ endpoint }`, data, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
       });
   
