@@ -69,7 +69,7 @@ const Loggin = () => {
                 loginStyles.container,
                 { backgroundColor: Colors.WHITE_FONDO },
                 ]}
-            >
+            > 
                 <View style={loginStyles.contain_logo}>
                 <Animatable.Image
                     source={require("../domain/assets/logo-brainapps.jpg")}
