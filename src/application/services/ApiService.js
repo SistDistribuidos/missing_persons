@@ -1,12 +1,13 @@
 import axios from 'axios';
+import { enviroment } from '../../../enviroment';
 
 const apiService = axios.create({
-  baseURL: 'http://192.168.0.104/PersonasDesaparecidas/public/api/', 
+  baseURL: enviroment.apiUrl,
 });
 
 export const getDatos = async (endpoint) => {
   try {
-    const response = await apiService.get(`/${ endpoint }`);
+    const response = await apiService.get(`/${endpoint}`);
     return response.data;
   } catch (error) {
     throw error;
@@ -14,18 +15,18 @@ export const getDatos = async (endpoint) => {
 };
 
 export const enviarDatos = async (endpoint, data) => {
-    try {
-      const response = await apiService.post(`${ endpoint }`, data, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-  
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
-  };
+  try {
+    const response = await apiService.post(`${endpoint}`, data, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const enviarDatosMultimedia = async (endpoint, data) => {
     try {
