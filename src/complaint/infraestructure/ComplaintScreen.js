@@ -1,14 +1,20 @@
 import { View, Text, FlatList, StyleSheet, TouchableHighlight, TouchableOpacity, Image } from 'react-native'
-import React,{ useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Colors from '../domain/Colors';
 import { getReportsAcepted } from '../../application/services/ValuesService';
 
-const ComplaintScreen = ({complaint_id}) => {
+const ComplaintScreen = ({ complaint_id }) => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        listReports();
+        listReportsAsync();
     }, []);
+
+    const listReportsAsync = async () => {
+        setInterval(() => {
+            listReports();
+        }, 5000);
+    };
 
     const listReports = async () => {
         try {
@@ -22,10 +28,10 @@ const ComplaintScreen = ({complaint_id}) => {
         }
     }
 
-    const screen_complaint = (val) =>{
+    const screen_complaint = (val) => {
         complaint_id(val);
     }
-    
+
     const renderItem = ({ item }) => {
         console.log('ingresa ===>');
         const select_color_estado = (estado) => {
@@ -54,7 +60,7 @@ const ComplaintScreen = ({complaint_id}) => {
 
                                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                                     <TouchableOpacity onPress={() => console.log('estado')}
-                                        style={{ backgroundColor: 'white', borderRadius: 15, borderWidth: 3, borderColor:  Colors.RED, padding: 5 }}
+                                        style={{ backgroundColor: 'white', borderRadius: 15, borderWidth: 3, borderColor: Colors.RED, padding: 5 }}
                                     >
                                         <Text style={{ color: Colors.RED, fontWeight: 'bold' }}>Desaparecido</Text>
                                     </TouchableOpacity>
@@ -99,39 +105,39 @@ const ComplaintScreen = ({complaint_id}) => {
         );
     };
     return (
-            <View style={{ flex: 1 }}
-            >
-                <FlatList
-                    ItemSeparatorComponent={
-                        Platform.OS !== 'android' &&
-                        (({ highlighted }) => (
-                            <View
-                                style={[style.separator, highlighted && { marginLeft: 0 }]}
-                            />
-                        ))
-                    }
-                    data={data}
-                    renderItem={renderItem}
-                />
-            </View>
+        <View style={{ flex: 1 }}
+        >
+            <FlatList
+                ItemSeparatorComponent={
+                    Platform.OS !== 'android' &&
+                    (({ highlighted }) => (
+                        <View
+                            style={[style.separator, highlighted && { marginLeft: 0 }]}
+                        />
+                    ))
+                }
+                data={data}
+                renderItem={renderItem}
+            />
+        </View>
 
     )
 }
 
 const styles = StyleSheet.create({
-    container:{
+    container: {
         // Propiedades de sombra
         shadowColor: 'black',
         shadowOffset: { width: 10, height: 10 },
-        shadowOpacity:1,
+        shadowOpacity: 1,
         shadowRadius: 5,
         elevation: 100, // Solo para Android
     },
     image_styles: {
-        width: 150, 
-        height: '100%', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
+        width: 150,
+        height: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
         borderRadius: 20
     },
 });

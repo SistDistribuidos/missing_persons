@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text, ToastAndroid } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import ComponentHeader from './components/ComponentHeader'
@@ -17,8 +17,9 @@ import IncompleteFormModal from '../../application/components/IncompleteFormModa
 import FormIncomplete from '../application/FormIncomplete'
 import FormFilled from '../../application/components/FormFilled'
 import { sendData } from '../../application/services/ValuesService'
+import { saveReports } from '../../application/services/DatabaseService'
 
-const RegisterComplaint = ({navigation }) => {
+const RegisterComplaint = ({ navigation }) => {
   const [viewScreen, setViewScreen] = useState(1)
 
   // const { data } = route.params;
@@ -28,14 +29,14 @@ const RegisterComplaint = ({navigation }) => {
   value_modal.setTitle("NUEVA PUBLICACION !!!");
   value_modal.setDescription("Lamentamos mucho la situacion en la que te encuentras, esperamos que esto ayude a encontrar a esa persona para que puedas reunirte con ella en un futuro. ");
   const modalSwal = useModal(true);
-  
+
   const modal_form_incomplete = FormIncomplete();
   const form_filled = FormIncomplete();
-  
+
   const [data_complaint_register, setData_complaint_register] = useState(new ComplaintRegisterData());
 
   const select_progres_line = (val) => {
-    if (val<viewScreen) {
+    if (val < viewScreen) {
       let progres_line = val / 2.5;
       console.log(progres_line);
       if (progres_line <= 1) {
@@ -52,20 +53,25 @@ const RegisterComplaint = ({navigation }) => {
   const nextScreen = (val) => {
     console.log('=====>> ', data_complaint_register);
     // if(data_complaint_register.fillViewComplete(val)){
-      setViewScreen(val);
+    setViewScreen(val);
     // }else{
     //   modal_form_incomplete.showAgain();
     // }
-    if(val== 5 ){
+    if (val == 5) {
       form_filled.showAgain();
+      saveReports(2, data_complaint_register);
       sendData(data_complaint_register)
-      .then((response) => {
-        console.log("Respuesta ",response);
-      }).catch((e) => {
-        console.log(e);
-      });
+        .then((response) => {
+          console.log("Respuesta ", response);
+          ToastAndroid.show(`Denuncia aceptada `, ToastAndroid.SHORT);
+        }).catch((e) => {
+          console.log(e);
+          ToastAndroid.show(`Ocurrio un error ${e}`, ToastAndroid.SHORT);
+        }).finally(() => {
+          console.log('Proceso finalizado');
+        });
     }
-    
+
   }
   const goBack = () => {
     navigation.goBack(); // Esta función lleva de vuelta a la pantalla anterior
@@ -81,19 +87,19 @@ const RegisterComplaint = ({navigation }) => {
         description={value_modal.getDescription()}
       />
 
-      <IncompleteFormModal  
+      <IncompleteFormModal
         visible={modal_form_incomplete.visible}
         onClose={modal_form_incomplete.handleCloseModal}
         onAccept={modal_form_incomplete.handleCloseModal}
         title='ERROR !!!'
         description="Es necesario que rellene todo el formulario !!!"
       />
-      
-      
-      <FormFilled  
+
+
+      <FormFilled
         visible={form_filled.visible}
         onClose={form_filled.handleCloseModal}
-        onAccept={()=> {form_filled.handleCloseModal()}}
+        onAccept={() => { form_filled.handleCloseModal() }}
         title='Completado !!!'
         description="Formulario completado con exito !!!"
       />

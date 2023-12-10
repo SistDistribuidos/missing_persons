@@ -4,28 +4,38 @@ import Colors from '../domain/Colors'
 import { useNavigation } from '@react-navigation/native';
 import { getHistory } from '../../application/services/ValuesService';
 import LoadingDialog from '../../domain/img_animated/LoadingDialog';
+import * as SQLite from 'expo-sqlite';
+import { enviroment } from '../../../enviroment';
+import { createTable, getReports, saveReports } from '../../application/services/DatabaseService';
 
-const ViewMissingPersonsRecords = ({complaint_id}) => {
+const ViewMissingPersonsRecords = ({ complaint_id }) => {
     let data = [
-        { id: 1, nombre: 'Juan', apellido: 'perez', key: 'item1', estado: 'Pendiente', descripcion: 'Visto por ultima vez por el 8vo anillo zona de la  guradia viste de una cammisa azul y pantalones jean, cualquier informacion...', imagen1: 'https://picsum.photos/200', imagen2: null  }, 
-        { id: 2, nombre: 'Dilker', apellido: 'el feo', key: 'item2', estado: 'Aceptado', descripcion: 'Visto por ultima vez por el 8vo anillo zona de la  guradia viste de una cammisa azul y pantalones jean, cualquier informacion...', imagen1: 'https://picsum.photos/200', imagen2: 'https://picsum.photos/200' }, 
+        { id: 1, nombre: 'Juan', apellido: 'perez', key: 'item1', estado: 'Pendiente', descripcion: 'Visto por ultima vez por el 8vo anillo zona de la  guradia viste de una cammisa azul y pantalones jean, cualquier informacion...', imagen1: 'https://picsum.photos/200', imagen2: null },
+        { id: 2, nombre: 'Dilker', apellido: 'el feo', key: 'item2', estado: 'Aceptado', descripcion: 'Visto por ultima vez por el 8vo anillo zona de la  guradia viste de una cammisa azul y pantalones jean, cualquier informacion...', imagen1: 'https://picsum.photos/200', imagen2: 'https://picsum.photos/200' },
         { id: 3, nombre: 'pepe', apellido: 'de las casas', key: 'item3', estado: 'Rechazado', descripcion: 'Visto por ultima vez por el 8vo anillo zona de la  guradia viste de una cammisa azul y pantalones jean, cualquier informacion...', imagen1: 'https://picsum.photos/200', imagen2: 'https://picsum.photos/200' }
     ];
-    const screen_complaint = (item_id) =>{
+    const screen_complaint = (item_id) => {
         complaint_id(item_id);
     }
 
     const [dataList, setDataList] = useState([]);
     useEffect(() => {
-        chargeHistory(0);
-    },[]);
+        //chargeHistory(0);
+        chargeAsync();
+    }, []);
+
+    const chargeAsync = async () => {
+        setInterval(() => {
+            chargeHistory(0)
+        }, 5000);
+    };
 
     const chargeHistory = async (time) => {
         try {
             const res = await getHistory();
             setDataList(res);
-        } catch(error) {
-            if (error instanceof Error && error.message.includes('timeout') && time < 3 ) {
+        } catch (error) {
+            if (error instanceof Error && error.message.includes('timeout') && time < 3) {
                 setTimeout(() => {
                     chargeHistory();
                 }, 5000);
@@ -33,26 +43,26 @@ const ViewMissingPersonsRecords = ({complaint_id}) => {
                 ToastAndroid.show('Intentelo mas tarde', ToastAndroid.SHORT);
             }
         }
-        
+
     }
 
     const navigation = useNavigation();
     const renderItem = ({ item }) => {
-        
-        const select_color_estado = (estado) =>{
-            if(estado === 'Pendiente' ){
+
+        const select_color_estado = (estado) => {
+            if (estado === 'Pendiente') {
                 return Colors.ORANGE;
-            }else if(estado === 'Rechazado'){
+            } else if (estado === 'Rechazado') {
                 return Colors.RED;
-            }else{
+            } else {
                 return Colors.GREEN;
             }
         }
         return (
-            <View style={[styles.container, {padding: 10}]}>
+            <View style={[styles.container, { padding: 10 }]}>
                 <TouchableHighlight
                     key={item.key}
-                    onPress={() => {screen_complaint(item.id)}}
+                    onPress={() => { screen_complaint(item.id) }}
 
                     underlayColor={Colors.RED}
                 >
@@ -65,41 +75,41 @@ const ViewMissingPersonsRecords = ({complaint_id}) => {
 
                                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                                     <TouchableOpacity onPress={() => console.log('estado')}
-                                        style={{ backgroundColor: 'white', borderRadius: 15, borderWidth: 3, borderColor:select_color_estado(item.estado), padding: 5 }}
+                                        style={{ backgroundColor: 'white', borderRadius: 15, borderWidth: 3, borderColor: select_color_estado(item.estado), padding: 5 }}
                                     >
-                                        <Text style={{ color:select_color_estado(item.estado), fontWeight: 'bold' }}>{item.estado}</Text>
+                                        <Text style={{ color: select_color_estado(item.estado), fontWeight: 'bold' }}>{item.estado}</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
-                            <View style={{flex:2}}>
+                            <View style={{ flex: 2 }}>
                                 <Text style={{ fontSize: 15, marginLeft: 10, fontWeight: '500' }}>{item.descripcion}</Text>
                             </View>
-                            <View style={{ flex: 5, paddingBottom: 8}}>
-                                
-                                { item.imagen1 !== null && item.imagen2 !== null ?
-                                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection:'row' }}>
-                                        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', margin:5}}>
+                            <View style={{ flex: 5, paddingBottom: 8 }}>
+
+                                {item.imagen1 !== null && item.imagen2 !== null ?
+                                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
+                                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', margin: 5 }}>
                                             <Image
-                                                source={{uri: item.imagen1 }}
-                                                style={styles.image_styles} 
+                                                source={{ uri: item.imagen1 }}
+                                                style={styles.image_styles}
                                             />
                                         </View>
-                                        <View style={{flex: 1, marginRight:5, justifyContent: 'center', alignItems: 'center'}}>
+                                        <View style={{ flex: 1, marginRight: 5, justifyContent: 'center', alignItems: 'center' }}>
                                             <Image
-                                                source={{uri: item.imagen2 }}
-                                                style={styles.image_styles} 
+                                                source={{ uri: item.imagen2 }}
+                                                style={styles.image_styles}
                                             />
                                         </View>
                                     </View>
                                     :
                                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                                         <Image
-                                            source={{uri: 'https://picsum.photos/200' }}
-                                            style={styles.image_styles} 
+                                            source={{ uri: 'https://picsum.photos/200' }}
+                                            style={styles.image_styles}
                                         />
-                                    </View> 
+                                    </View>
                                 }
-                               
+
                                 {/* <TouchableOpacity style={{ margin: 10, backgroundColor: 'red' }} onPress={() => console.log('good')}>
                                     <Text>Press Here</Text>
                                 </TouchableOpacity> */}
@@ -115,7 +125,7 @@ const ViewMissingPersonsRecords = ({complaint_id}) => {
     };
 
     return (
-        <View style={{ flex: 1}}
+        <View style={{ flex: 1 }}
         >
             <FlatList
                 ItemSeparatorComponent={
@@ -134,19 +144,19 @@ const ViewMissingPersonsRecords = ({complaint_id}) => {
 }
 
 const styles = StyleSheet.create({
-    container:{
+    container: {
         // Propiedades de sombra
         shadowColor: 'black',
         shadowOffset: { width: 10, height: 10 },
-        shadowOpacity:1,
+        shadowOpacity: 1,
         shadowRadius: 5,
         elevation: 100, // Solo para Android
     },
     image_styles: {
-        width: 150, 
-        height: '100%', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
+        width: 150,
+        height: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
         borderRadius: 20
     },
 });
