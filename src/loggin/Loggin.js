@@ -77,7 +77,7 @@ const Loggin = () => {
                     easing="ease-out"
                     iterationCount="infinite"
                     style={{
-                    height: 280,
+                    height: 200,
                     width: 330,
                     resizeMode: "contain",
                     marginTop: 40,
