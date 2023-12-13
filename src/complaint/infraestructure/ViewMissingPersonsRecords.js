@@ -25,9 +25,9 @@ const ViewMissingPersonsRecords = ({ complaint_id }) => {
     }, []);
 
     const chargeAsync = async () => {
-        setInterval(() => {
-            chargeHistory(0)
-        }, 5000);
+        //   setInterval(() => {
+        chargeHistory(0)
+        //   }, 5000);
     };
 
     const chargeHistory = async (time) => {

@@ -13,17 +13,25 @@ import RegisterComplaint from '../complaint/infraestructure/RegisterComplaint';
 import FacialScannerHome from '../facialScanner.js/infraestructure/FacialScannerHome';
 import HomeFacialScanner from '../facialScanner.js/infraestructure/HomeFacialScanner';
 import Loggin from '../loggin/Loggin';
+import Signin from '../loggin/SignIn';
 
 const HomeStackNavigator = createNativeStackNavigator();
-function MyStack(){
+function MyStack() {
     return (
         <HomeStackNavigator.Navigator>
-            <HomeStackNavigator.Screen 
+            <HomeStackNavigator.Screen
                 name="Loggin"
                 component={Loggin}
                 options={{
                     headerShown: false
-                }} 
+                }}
+            />
+            <HomeStackNavigator.Screen
+                name="Signin"
+                component={Signin}
+                options={{
+                    headerShown: false
+                }}
             />
             {/* <HomeStackNavigator.Screen 
                 name="MenuComplaintScreens"
@@ -55,17 +63,17 @@ function MyTabs() {
             <Tab.Screen name="Home" component={Home}
                 options={{
                     tabBarLabel: 'home',
-                    tabBarIcon: ({ color, size})=>(
+                    tabBarIcon: ({ color, size }) => (
                         <MaterialCommunityIcons name="home" size={30} color="black" />
                     ),
                     headerShown: false,
                     tabBarBadge: 10
-                }}    
+                }}
             />
         </Tab.Navigator>
     )
 }
-export default function NavigationUnauthenticated () {
+export default function NavigationUnauthenticated() {
     return (
         <NavigationContainer>
             <MyStack />

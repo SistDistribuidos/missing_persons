@@ -11,9 +11,9 @@ const ComplaintScreen = ({ complaint_id }) => {
     }, []);
 
     const listReportsAsync = async () => {
-        setInterval(() => {
-            listReports();
-        }, 5000);
+        //    setInterval(() => {
+        listReports();
+        //    }, 5000);
     };
 
     const listReports = async () => {

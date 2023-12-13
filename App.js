@@ -10,17 +10,18 @@ import getNotifications from './ExpoNotifications';
 import * as Notifications from "expo-notifications"
 import { Provider } from 'react-redux';
 import Store from './src/loggin/redux/Store';
+import { saveTokenDevice } from './src/application/secureStore/ExpoSecureStore';
 
 export default function App() {
 
 
   const { registerForPushNotificationsAsync, handleNotificationResponse } = getNotifications;
-  useEffect(() => { 
-    registerForPushNotificationsAsync();
+  useEffect(() => {
+    obtainToken();
     Notifications.setNotificationHandler({
-      handleNotification: async (notification) =>{
-        console.log('se recibio una notificacion, mientras estoy abierta')
-        return  { 
+      handleNotification: async (notification) => {
+        event();
+        return {
           shouldShowAlert: true,
           shouldPlaySound: true,
           shouldSetBadge: true,
@@ -28,17 +29,39 @@ export default function App() {
       }
     });
 
-    const responseListener = 
-    Notifications.addNotificationResponseReceivedListener(
-      handleNotificationResponse
+    const event = () => {
+      console.log('Esta notificacion se ejecuta cuando recibo una notificacion en primer plano');
+    }
+
+    const responseListener =
+      Notifications.addNotificationResponseReceivedListener(
+        handleNotificationResponse
       );
 
-      return () => {
-        Notifications.removeNotificationSubscription(responseListener);
+    return () => {
+      Notifications.removeNotificationSubscription(responseListener);
+    }
+
+  }, []);
+  const obtainToken = async () => {
+    try {
+      const value = await registerForPushNotificationsAsync();
+      if (value) {
+        console.log("El valor es " + value);
+        const res = await saveTokenDevice(value);
+        if (res) {
+          console.log('Guardado satisfactoriamente')
+        } else {
+          console.log('Ocurrio un error');
+        }
       }
-
-  },[]);
-
+      else {
+        console.log('No hay valor alguno')
+      }
+    } catch (error) {
+      console.log('Ocurrio un error');
+    }
+  }
   return (
     <View style={styles.container}>
       {/* <StatusBar style="auto" /> */}

@@ -1,5 +1,6 @@
 import { getDatos, enviarDatosMultimedia, enviarDatos, enviarDatosWithToken } from './ApiService';
-
+import getNotifications from '../../../ExpoNotifications';
+import { getValueForTokenDevice, getValueForUser } from '../secureStore/ExpoSecureStore';
 
 
 export const getNationalities = async () => {
@@ -21,18 +22,18 @@ export const getNationalities = async () => {
     } catch (error) {
         console.error('error al cargar nacionalidades', error);
     }
-    
+
 }
 
 export const searchPeople = async (photo) => {
     const EndPoint = 'escaner';
     let formData = new FormData();
-    formData.append('foto',{
+    formData.append('foto', {
         uri: photo,
         name: 'image1.jpg',
         type: 'image/jpeg',
-    },'foto','file');
-    
+    }, 'foto', 'file');
+
     console.log(formData, photo, 'goood');
     try {
         const response = await enviarDatosMultimedia(EndPoint, formData);
@@ -66,9 +67,10 @@ export const getColors = async () => {
 }
 
 export const getHistory = async () => {
-    const userId = 1;   // modificar parametro cuando se tenga usuarios
-    const EndPoint = `historial-denuncias/${userId}`;
+
     try {
+        const userId = await getValueForUser();   // modificar parametro cuando se tenga usuarios
+        const EndPoint = `historial-denuncias/${userId}`;
         const history = await getDatos(EndPoint);
         const listOfHistories = history.datos;
         console.log(listOfHistories);
@@ -114,12 +116,12 @@ export const getLanguages = async () => {
 }
 
 export const getReport = async (denuncia_id) => {
-    const EndPoint = `mostrar-denuncia/${ denuncia_id }`;
+    const EndPoint = `mostrar-denuncia/${denuncia_id}`;
     try {
         const report = await getDatos(EndPoint);
         return report;
     } catch (error) {
-        console.log('Error, no se pudo cargar la informacion de reporte ',error);
+        console.log('Error, no se pudo cargar la informacion de reporte ', error);
     }
 };
 
@@ -153,7 +155,9 @@ export const getReportsAcepted = async () => {
 
 export const sendData = async (data) => {
     const endPoint = 'denunciar';
+
     try {
+        const userId = await getValueForUser();
         const formData = new FormData();
         formData.append('nombre', data.nombre);
         formData.append('apellidos', `apellidos algo`);
@@ -167,7 +171,7 @@ export const sendData = async (data) => {
         formData.append('fecha_desaparicion', data.fecha_desaparicion);
         formData.append('hora_desaparicion', data.hora_desaparicion);
         formData.append('ultima_ropa_puesta', data.ultima_ropa_puesta);
-        formData.append('user_id', 1);
+        formData.append('user_id', userId);
         formData.append('tatuaje', data.tatuaje);
         formData.append('genero', data.genero);
         formData.append('nacionalidad_id', data.nacionalidad_id);
@@ -180,20 +184,20 @@ export const sendData = async (data) => {
             uri: data.documento_id,
             type: 'image/jpeg',
             name: 'image1.jpg'
-        } );
+        });
         formData.append('imagen1', {
             uri: data.image,
             type: 'image/jpeg',
             name: 'image2.jpg'
-        } );
-        
+        });
+
         /* Falta codigo aqui */
 
-        
+
         const response = await enviarDatosMultimedia(endPoint, formData);
         return response;
-    } catch {
-
+    } catch (error) {
+        throw error;
     }
 }
 
@@ -203,17 +207,17 @@ export const sendAvistament = async (data) => {
         const formData = new FormData();
 
         if (data.denunciaImage)
-        formData.append("imagenes[]",{
-            uri: data.denunciaImage,
-            type: 'image/jpeg',
-            name: 'image1.jpeg'
-        });
+            formData.append("imagenes[]", {
+                uri: data.denunciaImage,
+                type: 'image/jpeg',
+                name: 'image1.jpeg'
+            });
         if (data.fotoImage)
-        formData.append('imagenes[]', {
-            uri: data.fotoImage,
-            type: 'image/jpeg',
-            name: 'image2.jpeg'
-        });
+            formData.append('imagenes[]', {
+                uri: data.fotoImage,
+                type: 'image/jpeg',
+                name: 'image2.jpeg'
+            });
 
         formData.append('descripcion', data.descripcion);
         formData.append('fecha', data.fecha);
@@ -225,17 +229,51 @@ export const sendAvistament = async (data) => {
         const response = await enviarDatosMultimedia(endPoint, formData);
         return response;
     } catch (error) {
-        console.log('Fallo al cargar ',error);
+        console.log('Fallo al cargar ', error);
     }
 }
 
 export const login = async (data) => {
     const endPoint = 'login';
+    let sendData = data;
     try {
-        const response = await enviarDatos(endPoint, data);
+        const tokenDevice = await getValueForTokenDevice();
+        sendData = {
+            'email': data.email,
+            'password': data.password,
+            'token': tokenDevice
+        };
+        console.log(sendData);
+    } catch (error) {
+        throw error;
+    }
+    try {
+        const response = await enviarDatos(endPoint, sendData);
         return response;
     } catch (error) {
-        return error.response.data;
+        throw error;
+    }
+}
+
+export const signup = async (data) => {
+    const endPoint = 'register';
+    let sendData = data;
+    try {
+        const tokenDevice = await getValueForTokenDevice();
+        sendData = {
+            "name": data.username,
+            'email': data.email,
+            'password': data.password,
+            'token': tokenDevice
+        };
+    } catch (error) {
+        throw error;
+    }
+    try {
+        const response = await enviarDatos(endPoint, sendData);
+        return response;
+    } catch (error) {
+        throw error;
     }
 }
 
@@ -248,4 +286,8 @@ export const logout = async (token) => {
     } catch (error) {
         return error.response.data;
     }
+}
+
+async function getToken() {
+
 }
